@@ -140,3 +140,4 @@ D:\Workspace\Working Processes\PMS - Project Management System\api\obj\Debug\net
 D:\Workspace\Working Processes\PMS - Project Management System\api\obj\Debug\net8.0\ref\api.dll
 D:\Workspace\Working Processes\PMS - Project Management System\api\bin\Debug\net8.0\MailKit.dll
 D:\Workspace\Working Processes\PMS - Project Management System\api\bin\Debug\net8.0\MimeKit.dll
+D:\Workspace\Working Processes\PMS - Project Management System\api\obj\Debug\net8.0\api.sourcelink.json

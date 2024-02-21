@@ -23,7 +23,7 @@ namespace api.Controllers.Departments
       return Ok(await _service.GetByIdAsync(id));
     }
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] DepartmentDto departmentDto)
+    public async Task<IActionResult> Add([FromBody] NewDepartmentDto departmentDto)
     {
       if (!ModelState.IsValid) return BadRequest(ModelState);
       await _service.CreateAsync(departmentDto);

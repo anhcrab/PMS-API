@@ -6,7 +6,7 @@ namespace api.Interfaces
   {
     Task<List<DepartmentDto>> GetAllAsync();
     Task<DepartmentDto> GetByIdAsync(string id);
-    Task CreateAsync(DepartmentDto departmentDto);
+    Task CreateAsync(NewDepartmentDto departmentDto);
     Task UpdateAsync(string id, DepartmentDto departmentDto);
     Task DeleteAsync(string id);
   } 

@@ -1,9 +1,7 @@
 using api.Helpers;
 using api.Interfaces;
 using MailKit.Security;
-using Microsoft.Extensions.Options;
 using MimeKit;
-using Org.BouncyCastle.Utilities;
 
 namespace api.Services
 {
@@ -29,8 +27,10 @@ namespace api.Services
 
     public async Task SendMail(MailContent mailContent)
     {
-      var email = new MimeMessage();
-      email.Sender = new MailboxAddress(_config["MailSettings:DisplayName"], _config["MailSettings:Mail"]);
+      var email = new MimeMessage
+      {
+        Sender = new MailboxAddress(_config["MailSettings:DisplayName"], _config["MailSettings:Mail"])
+      };
       email.From.Add(new MailboxAddress(_config["MailSettings:DisplayName"], _config["MailSettings:Mail"]));
       email.To.Add(MailboxAddress.Parse(mailContent.To));
       email.Subject = mailContent.Subject;

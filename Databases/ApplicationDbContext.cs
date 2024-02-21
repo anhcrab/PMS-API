@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Databases
 {
-  public class ApplicationDbContext : IdentityDbContext<AppUser>
+  public class ApplicationDbContext(DbContextOptions options) : IdentityDbContext<AppUser>(options)
   {
     #region DbSet
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Department> Departments { get; set; }
+
     #endregion
-    public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -26,8 +26,8 @@ namespace api.Databases
       builder.Entity<Department>(options =>
       {
         options
-          .HasMany(d => d.Members)
-          .WithOne(e => e.Department);
+          .HasMany(e => e.Members)
+          .WithOne(d => d.Department);
       });
 
       base.OnModelCreating(builder);

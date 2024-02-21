@@ -8,13 +8,16 @@ namespace api.Services
   public class DepartmentService(IDepartmentRepository repository) : IDepartmentService
   {
     private readonly IDepartmentRepository _repository = repository;
-    public async Task CreateAsync(DepartmentDto departmentDto)
+    // private readonly ILogger<DepartmentService> _logger = logger;
+    public async Task CreateAsync(NewDepartmentDto departmentDto)
     {
-      await _repository.AddAsync(new Department
+      var newDepartment = new Department
       {
         Name = departmentDto.Name,
         Address = departmentDto.Address,
-      });
+      };
+      // _logger.LogInformation(newDepartment.ToString());
+      await _repository.AddAsync(newDepartment);
     }
 
     public async Task DeleteAsync(string id)

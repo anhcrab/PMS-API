@@ -10,14 +10,9 @@ namespace api.Repositories
     private readonly ApplicationDbContext _context = context;
     public async Task<Department?> AddAsync(Department model)
     {
-      var department = _context.Departments.FirstAsync(x => x.Id == model.Id);
-      if (department == null)
-      {
-        _context.Departments.Add(model);
-        await _context.SaveChangesAsync();
-        return await GetAsync(model.Id);
-      }
-      return null;
+      _context.Departments.Add(model);
+      await _context.SaveChangesAsync();
+      return model;
     }
 
     public async Task DeleteAsync(string id)
