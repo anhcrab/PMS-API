@@ -17,8 +17,7 @@ namespace api.Controllers.Auth
     IConfiguration config,
     ITokenService tokenService,
     SignInManager<AppUser> signInManager,
-    ISendMailService mailService,
-    IEmployeeService employeeService
+    ISendMailService mailService
 ) : ControllerBase
   {
     private readonly UserManager<AppUser> _userManager = userManager;
@@ -26,46 +25,45 @@ namespace api.Controllers.Auth
     private readonly ITokenService _tokenService = tokenService;
     private readonly SignInManager<AppUser> _signInManager = signInManager;
     private readonly ISendMailService _mailService = mailService;
-    private readonly IEmployeeService _employeeService = employeeService;
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
     {
-      try
+      if (!ModelState.IsValid)
       {
-        if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+      }
+      var appUser = new AppUser
+      {
+        UserName = registerDto.Username,
+        Email = registerDto.Email,
+      };
+      var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password!);
+      if (createdUser.Succeeded)
+      {
+        var roleResult = await _userManager.AddToRolesAsync(
+          appUser,
+          appUser.Email == _config["AdminEmail"] ? ["ADMIN", "MANAGER", "EMPLOYEE"] : ["CLIENT"]
+        );
+        if (roleResult.Succeeded)
         {
-          return BadRequest(ModelState);
-        }
-        var appUser = new AppUser
-        {
-          UserName = registerDto.Username,
-          Email = registerDto.Email,
-        };
-        var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password!);
-        if (createdUser.Succeeded)
-        {
-          var roleResult = await _userManager.AddToRoleAsync(appUser, appUser.Email == _config["AdminEmail"] ? "ADMIN" : "CLIENT");
-          if (roleResult.Succeeded)
+          if (appUser.Email == _config["AdminEmail"])
           {
-            return Ok(new UserTokenDto
-            {
-              Token = await _tokenService.CreateToken(appUser)
-            });
+            appUser.Department = Departments.ADMINISTRATION;
+            appUser.Position = "Quản trị viên";
+            appUser.Status = EmployeeStatuses.EMPLOYED;
+            await _userManager.UpdateAsync(appUser);
           }
-          else
-          {
-            return StatusCode(500, roleResult.Errors);
-          }
+          return Ok(await _tokenService.CreateToken(appUser));
         }
         else
         {
-          return StatusCode(500, createdUser.Errors);
+          return StatusCode(500, roleResult.Errors);
         }
       }
-      catch (Exception e)
+      else
       {
-        return StatusCode(404, e);
+        return StatusCode(500, createdUser.Errors);
       }
     }
 
@@ -88,10 +86,7 @@ namespace api.Controllers.Auth
         {
           return Unauthorized("Email not found and/or password not correct");
         }
-        return Ok(new UserTokenDto
-        {
-          Token = await _tokenService.CreateToken(user)
-        });
+        return Ok(await _tokenService.CreateToken(user));
       }
       catch (Exception e)
       {
@@ -130,9 +125,17 @@ namespace api.Controllers.Auth
     [HttpGet]
     [Route("role")]
     [Authorize]
-    public async Task<IActionResult> Role()
+    public IActionResult Role()
     {
-      return Ok(await _employeeService.GetRole(User.GetEmail()));
+      return Ok(User.GetRole());
+    }
+
+    [HttpGet]
+    [Route("roles")]
+    [Authorize]
+    public IActionResult Roles()
+    {
+      return Ok(User.GetRoles());
     }
 
     [HttpGet("test")]

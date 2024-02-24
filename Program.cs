@@ -65,7 +65,7 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 builder.Services
   .AddDbContext<ApplicationDbContext>(
     opts => opts.UseMySQL(
-      builder.Configuration.GetConnectionString("mysql")!
+      builder.Configuration.GetConnectionString("localmysql")!
     )
   );
 
@@ -106,12 +106,13 @@ builder.Services.AddAuthentication(options =>
 });
 
 // Register Repositories
-builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddTransient<ISendMailService, SendMailService>();
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IRoleService, RoleService>();
+builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 
 var app = builder.Build();
 
@@ -119,8 +120,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
 }
-  app.UseSwagger();
-  app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors("corsapp");
 

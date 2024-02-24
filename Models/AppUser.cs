@@ -1,14 +1,20 @@
 using Microsoft.AspNetCore.Identity;
+using api.Helpers;
 
 namespace api.Models
 {
   public class AppUser : IdentityUser
   {
-    public string Description { get; set; } = string.Empty;
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
+    public string FirstName { get; set; } = "";
+    public string LastName { get; set; } = "";
     public string Sex { get; set; } = "male";
-    public string Dob { get; set; } = string.Empty;
-    public string AdditionalInfo { get; set; } = string.Empty;
+    public string Dob { get; set; } = "";
+    public string Hometown { get; set; } = "";
+    public Departments Department { get; set; } = Departments.NONE;
+    public string? SupervisorId { get; set; }
+    public string Position { get; set; } = "";
+    public string Description { get; set; } = "";
+    public string AdditionalInfo { get; set; } = "";
+    public EmployeeStatuses Status { get; set; } = EmployeeStatuses.FREE;
   }
 }

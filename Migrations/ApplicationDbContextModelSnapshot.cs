@@ -47,25 +47,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0a5ba0d5-69a5-457b-a029-b493baa80234",
+                            Id = "18618d4a-b9cf-42e3-936f-2c9763b43c36",
+                            ConcurrencyStamp = "990958d5-7442-4f92-8516-eb2a04edf782",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7f8b9df2-629c-4ba0-ad71-ff71d2436d04",
+                            Id = "9d5236d4-0539-4741-ae7e-d28c7613479b",
+                            ConcurrencyStamp = "f283bf1e-9700-4be1-a641-4e19d333cd49",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "bbeb4fb6-59cd-4a20-bcbe-3d1077e4849d",
+                            Id = "c824c091-b2cf-40c1-b581-781f13eb45d9",
+                            ConcurrencyStamp = "6980ddd7-2bf6-4ea3-b749-d290c6f7c892",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "936b962c-a64e-4965-a958-e0736f031d05",
+                            Id = "b6236bbf-f743-472f-803a-b82727b56c7b",
+                            ConcurrencyStamp = "116ec0f9-ba99-4e76-9ad4-37a23029c32a",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -189,6 +193,9 @@ namespace api.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("Department")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -205,6 +212,10 @@ namespace api.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Hometown")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -235,11 +246,21 @@ namespace api.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Sex")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SupervisorId")
                         .HasColumnType("longtext");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -259,60 +280,6 @@ namespace api.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("api.Models.Department", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("departments");
-                });
-
-            modelBuilder.Entity("api.Models.Employee", b =>
-                {
-                    b.Property<string>("EmployeeId")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("DepartmentId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Hometown")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("SupervisorId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("EmployeeId");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("employees");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -364,43 +331,6 @@ namespace api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("api.Models.Employee", b =>
-                {
-                    b.HasOne("api.Models.Department", "Department")
-                        .WithMany("Members")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Models.Employee", "Supervisor")
-                        .WithMany("TeamMembers")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
-
-                    b.Navigation("Supervisor");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("api.Models.Department", b =>
-                {
-                    b.Navigation("Members");
-                });
-
-            modelBuilder.Entity("api.Models.Employee", b =>
-                {
-                    b.Navigation("TeamMembers");
                 });
 #pragma warning restore 612, 618
         }

@@ -37,12 +37,17 @@ namespace api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: false),
                     FirstName = table.Column<string>(type: "longtext", nullable: false),
                     LastName = table.Column<string>(type: "longtext", nullable: false),
                     Sex = table.Column<string>(type: "longtext", nullable: false),
                     Dob = table.Column<string>(type: "longtext", nullable: false),
+                    Hometown = table.Column<string>(type: "longtext", nullable: false),
+                    Department = table.Column<int>(type: "int", nullable: false),
+                    SupervisorId = table.Column<string>(type: "longtext", nullable: true),
+                    Position = table.Column<string>(type: "longtext", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: false),
                     AdditionalInfo = table.Column<string>(type: "longtext", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
@@ -61,20 +66,6 @@ namespace api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "departments",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "varchar(255)", nullable: false),
-                    Name = table.Column<string>(type: "longtext", nullable: false),
-                    Address = table.Column<string>(type: "longtext", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_departments", x => x.Id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -189,50 +180,15 @@ namespace api.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "employees",
-                columns: table => new
-                {
-                    EmployeeId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    SupervisorId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    DepartmentId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    Hometown = table.Column<string>(type: "longtext", nullable: false),
-                    Position = table.Column<string>(type: "longtext", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_employees", x => x.EmployeeId);
-                    table.ForeignKey(
-                        name: "FK_employees_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_employees_departments_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_employees_employees_SupervisorId",
-                        column: x => x.SupervisorId,
-                        principalTable: "employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0a5ba0d5-69a5-457b-a029-b493baa80234", null, "Admin", "ADMIN" },
-                    { "7f8b9df2-629c-4ba0-ad71-ff71d2436d04", null, "Manager", "MANAGER" },
-                    { "936b962c-a64e-4965-a958-e0736f031d05", null, "Client", "CLIENT" },
-                    { "bbeb4fb6-59cd-4a20-bcbe-3d1077e4849d", null, "Employee", "EMPLOYEE" }
+                    { "18618d4a-b9cf-42e3-936f-2c9763b43c36", "990958d5-7442-4f92-8516-eb2a04edf782", "Admin", "ADMIN" },
+                    { "9d5236d4-0539-4741-ae7e-d28c7613479b", "f283bf1e-9700-4be1-a641-4e19d333cd49", "Manager", "MANAGER" },
+                    { "b6236bbf-f743-472f-803a-b82727b56c7b", "116ec0f9-ba99-4e76-9ad4-37a23029c32a", "Client", "CLIENT" },
+                    { "c824c091-b2cf-40c1-b581-781f13eb45d9", "6980ddd7-2bf6-4ea3-b749-d290c6f7c892", "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -271,21 +227,6 @@ namespace api.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_employees_DepartmentId",
-                table: "employees",
-                column: "DepartmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_employees_SupervisorId",
-                table: "employees",
-                column: "SupervisorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_employees_UserId",
-                table: "employees",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -307,16 +248,10 @@ namespace api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "employees");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "departments");
         }
     }
 }

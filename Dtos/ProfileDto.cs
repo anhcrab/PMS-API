@@ -5,15 +5,15 @@ namespace api.Dtos
   public class ProfileDto
   {
     [Required]
-    public string firstName { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
     [Required]
-    public string lastName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
     [Required]
-    public string dob { get; set; } = null!;
+    public string Dob { get; set; } = null!;
     [Required]
-    public string phoneNumber { get; set; } = null!;
+    public string PhoneNumber { get; set; } = null!;
     [Required]
-    public string sex { get; set; } = null!;
-    public string? description { get; set; }
+    public string Sex { get; set; } = null!;
+    public string? Description { get; set; }
   }
 }

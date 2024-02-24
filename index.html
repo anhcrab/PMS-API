@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.2/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script type="text/javascript" src="https://terusvn.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"
+    id="jquery-core-js"></script>
+  <script type="text/javascript" src="https://terusvn.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"
+    id="jquery-migrate-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <section>
+    <!-- Modal -->
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered terus-modal__contact">
+        <div class="modal-content h-100" style="--bs-modal-border-radius: 0; --bs-modal-border-width: 0">
+          <div class="modal-body h-100" style="--bs-modal-padding: 0">
+            <div class="row h-100 gx-0">
+              <div class="col-lg-7 terus-modal__contact-mobile p-4 bg-black text-white flex-column justify-content-between">
+                <div class="">
+                  <h2 class="modal-title mb-4 fs-2 fw-semibold ft-lora text-light" id="exampleModalLabel">
+                    Mang tới dịch vụ tốt nhất <br>cùng giá trị khác biệt cho khách hàng
+                  </h2>
+                  <p>
+                    Đối với Terus, mỗi dự án chúng tôi nhắm đến không chỉ mang lại giá trị cho doanh nghiệp mà còn là sự
+                    hợp tác lâu dài nhằm mang lại các giá trị bền vững cho khách hàng.
+                  </p>
+                  <div class="terus-modal__contact-img d-flex justify-content-center flex-fill">
+                    <img style="height: 480px; margin-top: -50px;"
+                      src="https://terusvn.com/wp-content/uploads/2024/02/6626b47e-0f65-4929-9ec3-7af4fdf26d4d.png" alt="lien-he-tu-van">
+                  </div>
+                </div>
+                <div class="w-75 d-flex flex-wrap justify-content-stretch">
+                  <a class="social-icon flex-fill" href="mailto:support@terusvn.com">
+                    <i class="bi bi-envelope-fill"></i>
+                  </a>
+                  <a class="social-icon flex-fill" href="https://www.facebook.com/Terusvn">
+                    <i class="bi bi-facebook"></i>
+                  </a>
+                  <a class="social-icon flex-fill" href="https://www.instagram.com/terus_media/">
+                    <i class="bi bi-instagram"></i>
+                  </a>
+                  <a class="social-icon flex-fill" href="https://www.pinterest.com/terusmedia/">
+                    <i class="bi bi-pinterest"></i>
+                  </a>
+                  <a class="social-icon flex-fill" href="https://www.behance.net/terusmedia">
+                    <i class="bi bi-behance"></i>
+                  </a>
+                  <a class="social-icon flex-fill" href="https://www.youtube.com/channel/UCTnifnAg_GxEvOAduLSzMuA">
+                    <i class="bi bi-youtube"></i>
+                  </a>
+                  <a class="social-icon flex-fill" href="https://www.tiktok.com/@terustech/">
+                    <i class="bi bi-tiktok"></i>
+                  </a>
+                  <a class="social-icon flex-fill" href="/">
+                    <i class="bi bi-linkedin"></i>
+                  </a>
+                  <a class="social-icon flex-fill" href="https://twitter.com/terus2023">
+                    <i class="bi bi-twitter-x"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-5 h-100 p-4 d-flex flex-column justify-content-between">
+                <div class="w-100 d-flex flex-column justify-content-between">
+                  <div class="d-flex w-100 justify-content-end">
+                    <button type="button" class="btn-close mb-4 terus-btn__close contactModalClose"
+                      data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                  </div>
+                  <form id="terus-modal__contact-form" class="row px-3 g-4 needs-validation" novalidate>
+                    <h3 class="ft-lora mb-3 mt-0 pt-4">
+                      Để lại thông tin dưới đây,<br>
+                      <span class="fw-semibold" style="color: #f5dd00;">Terus</span> sẽ liên hệ với bạn ngay
+                    </h3>
+                    <div class="col-12">
+                      <input type="text" class="form-control terus-modal__contact-form__control"
+                        id="contacModalFormName" required placeholder="Họ và tên của bạn">
+                      <div class="invalid-feedback">
+                        Vui lòng điền họ và tên của bạn.
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <input type="text" class="form-control terus-modal__contact-form__control"
+                        id="contacModalFormPhone" required placeholder="Số điện thoại">
+                      <div class="invalid-feedback">
+                        Vui lòng điền số điện thoại.
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <input type="email" class="form-control terus-modal__contact-form__control"
+                        id="contacModalFormEmail" required placeholder="Email">
+                      <div class="invalid-feedback">
+                        Vui lòng điền email.
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <select class="form-select terus-modal__contact-form__control" id="contacModalFormService"
+                        required>
+                        <option style="display: none;" value="">Chọn dịch vụ mà bạn quan tâm</option>
+                        <optgroup label="Quản trị website">
+                          <option value="Mua SSL">Mua SSL</option>
+                          <option value="Chăm sóc website">Chăm sóc website</option>
+                          <option value="Đăng ký Bộ Công Thương">Đăng ký Bộ Công Thương</option>
+                          <option value="Nâng cấp hosting">Nâng cấp hosting</option>
+                          <option value="Email doanh nghiệp">Email doanh nghiệp</option>
+                        </optgroup>
+                        <optgroup label="Digital Marketing">
+                          <option value="Facebook Ads">Facebook Ads</option>
+                          <option value="Google Ads">Google Ads</option>
+                          <option value="SEO tổng thế">SEO tổng thế</option>
+                        </optgroup>
+                        <optgroup label="Thiết kế website">
+                          <option value="Thiết kế website chuẩn Insight">Thiết kế website chuẩn Insight</option>
+                          <option value="Thiết kế website theo yêu cầu">Thiết kế website theo yêu cầu</option>
+                        </optgroup>
+                        <optgroup label="Thiết kế phần mềm">
+                          <option value="Lập trình webapp theo yêu cầu">Lập trình webapp theo yêu cầu</option>
+                          <option value="Lập trình webapp theo yêu cầu">Lập trình phần mềm theo yêu cầu</option>
+                          <option value="Thiết kế app mobile">Thiết kế app mobile</option>
+                        </optgroup>
+                        <optgroup label="Giải pháp quản lý">
+                          <option value="LMS - Hệ thống giáo dục">LMS - Hệ thống giáo dục</option>
+                          <option value="PMS - Hệ thống quản lý">PMS - Hệ thống quản lý</option>
+                        </optgroup>
+                      </select>
+                      <div class="invalid-feedback">
+                        Vui lòng chọn dịch vụ cần tư vấn.
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-white bg-bl-wh w-100 text-white ft-lora fs-4"
+                        style="--bs-btn-border-width: 0" type="submit">
+                        Nhận Tư Vấn
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div class="fs-5 ft-lora text-center fw-semibold">
+                  TERUS cam kết tuyệt đối không sử dụng thông tin của bạn để bán hoặc SPAM
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+    const form = document.getElementById("terus-modal__contact-form")
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const name = document.getElementById("contacModalFormName").value;
+      const phone = document.getElementById("contacModalFormPhone").value;
+      const email = document.getElementById("contacModalFormEmail").value;
+      const service = document.getElementById("contacModalFormService").value;
+      if (!name || !phone || !email || !service) form.classList.add('was-validated')
+      const payload = new FormData();
+      payload.append("name", name);
+      payload.append("phone", phone);
+      payload.append("email", email);
+      payload.append("service", service);
+      // fetch("https://terusvn.com/wp-json/api/contacts", {
+      //   method: "POST",
+      //   body: payload,
+      // }).then(() => {
+      //   location.reload();
+      //   document.getElementById("contactModalClose").click();
+      // });
+    }, false);
+  </script>
+</body>
+
+</html>

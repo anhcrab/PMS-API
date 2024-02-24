@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap");
+
+.terus-modal__contact {
+  height: calc(100% - 56px);
+}
+
+.terus-btn__close {
+  --bs-btn-close-color: #f5dd00;
+}
+
+.social-icon {
+  font-size: 25px;
+  cursor: pointer;
+  color: #ddd;
+}
+
+.terus-shadow {
+  box-shadow: 1px 1px 10px #ccc;
+}
+
+.bg-bl-wh {
+  background: linear-gradient(to bottom right, #000, #cfcfcf);
+}
+
+.ft-lora {
+  font-family: Lora;
+}
+
+.terus-modal__contact-form__control {
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1.5px solid #000;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.terus-modal__contact-form__control:focus {
+  border-color: #000;
+  outline: 0;
+  box-shadow: 0 0 0 0;
+}
+
+.terus-modal__contact-mobile {
+  display: none !important;
+}
+
+@media (min-width: 992px) {
+  .terus-modal__contact-mobile {
+    display: flex !important;
+  }
+}
