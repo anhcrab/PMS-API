@@ -1,4 +1,5 @@
 using api.Helpers;
+using Microsoft.AspNetCore.Identity;
 
 namespace api.Dtos
 {
@@ -12,11 +13,13 @@ namespace api.Dtos
     public string? Sex { get; set; }
     public string? Dob { get; set; }
     public string? Hometown { get; set; }
-    public Departments Department { get; set; }
+    public string? Address { get; set; }
+    public string? PhoneNumber { get; set; }
+    public string Department { get; set; } = "0";
     public string? Position { get; set; }
     public string? SupervisorId { get; set; }
     public string? Description { get; set; }
     public string? AdditionalInfo { get; set; }
-    public EmployeeStatuses Status { get; set; }
+    public string Status { get; set; } = "0";
   }
 }

@@ -10,6 +10,7 @@ namespace api.Models
     public string Sex { get; set; } = "male";
     public string Dob { get; set; } = "";
     public string Hometown { get; set; } = "";
+    public string Address { get; set; } = "";
     public Departments Department { get; set; } = Departments.NONE;
     public string? SupervisorId { get; set; }
     public string Position { get; set; } = "";

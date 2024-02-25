@@ -1,4 +1,5 @@
 using api.Dtos;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
@@ -43,7 +44,7 @@ namespace api.Services
 
     public async Task<UserDto> ReadAsync(string id)
     {
-      var user =  await _userManager.FindByIdAsync(id);
+      var user = await _userManager.FindByIdAsync(id);
       return user!.ToUserDto();
     }
 
@@ -57,13 +58,39 @@ namespace api.Services
         user.Sex = userDto.Sex ??= "";
         user.Dob = userDto.Dob ??= "";
         user.Hometown = userDto.Hometown ??= "";
-        user.Department = userDto.Department;
+        user.Department = ToDepartment(userDto.Department);
         user.Position = userDto.Position ??= "";
+        user.PhoneNumber = userDto.PhoneNumber ??= "";
         user.SupervisorId = userDto.SupervisorId ??= "";
         user.Description = userDto.Description ??= "";
         user.AdditionalInfo = userDto.AdditionalInfo ??= "";
+        user.Status = ToEmployeeStatus(userDto.Status);
         await _userManager.UpdateAsync(user);
       }
+    }
+
+    private static Departments ToDepartment(string str)
+    {
+      return str switch
+      {
+        "BUSINESS" => Departments.BUSINESS,
+        "MARKETING" => Departments.MARKETING,
+        "ADMINISTRATION" => Departments.ADMINISTRATION,
+        "HR" => Departments.HR,
+        "ACCOUNTING" => Departments.ACCOUNTING,
+        _ => Departments.NONE,
+      };
+    }
+
+    private static EmployeeStatuses ToEmployeeStatus(string str)
+    { 
+      return str switch
+      {
+        "EMPLOYED" => EmployeeStatuses.EMPLOYED,
+        "FIRED" => EmployeeStatuses.FIRED,
+        "RETIRED" => EmployeeStatuses.RETIRED,
+        _ => EmployeeStatuses.FREE,
+      };
     }
   }
 }

@@ -15,5 +15,6 @@ namespace api.Dtos
     [Required]
     public string Sex { get; set; } = null!;
     public string? Description { get; set; }
+    public string? Address { get; set; }
   }
 }

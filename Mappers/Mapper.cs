@@ -42,8 +42,10 @@ namespace api.Mappers
         Hometown = appUser.Hometown,
         Position = appUser.Position,
         SupervisorId = appUser.SupervisorId,
-        Department = appUser.Department,
-        
+        Department = appUser.Department.ToString(),
+        Address = appUser.Address,
+        PhoneNumber = appUser.PhoneNumber,
+        Status = appUser.Status.ToString()
       };
     }
     public static ProfileExtDto ToProfileExtDto(this AppUser appUser)

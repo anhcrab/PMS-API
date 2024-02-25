@@ -26,7 +26,8 @@ namespace api.Controllers.Employee
       return Ok(await _service.AllAsync());
     }
 
-    [HttpGet("/page/{paged}")]
+    [HttpGet]
+    [Route("page/{paged}")]
     [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Paginate(int paged)
     {
@@ -37,9 +38,8 @@ namespace api.Controllers.Employee
     [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> Add([FromBody] NewEmployee newEmployee)
     {
-      // Int32.Parse()
-      await _service.CreateAsync(newEmployee.Id, (Helpers.Departments)int.Parse(newEmployee.Department), newEmployee.SupervisorId);
-      return NoContent();
+      var res = await _service.CreateAsync(newEmployee.Id, newEmployee.Department, newEmployee.SupervisorId);
+      return Ok(res != null ? res : "null mẹ rồi");
     }
 
     [HttpDelete("{id}")]
@@ -48,6 +48,35 @@ namespace api.Controllers.Employee
     {
       await _service.DeleteAsync(id);
       return NoContent();
+    }
+
+    [HttpGet("promotion/{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Promote(string id)
+    {
+      await _service.PromoteAsync(id);
+      return NoContent();
+    }
+
+    [HttpGet("demotion/{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Demote(string id)
+    {
+      await _service.DemoteAsync(id);
+      return NoContent();
+    }
+
+    [HttpGet("room")]
+    [Authorize(Roles = "Admin, Manager")]
+    public async Task<IActionResult> Room()
+    {
+      return Ok(await _service.Room(User.GetEmail()));
+    }
+
+    [HttpGet("myteam/")]
+    public async Task<IActionResult> MyTeam()
+    {
+      return Ok(await _service.Team(User.GetEmail()));
     }
   }
 }

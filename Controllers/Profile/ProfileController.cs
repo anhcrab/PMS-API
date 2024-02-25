@@ -36,6 +36,7 @@ namespace api.Controllers.Profile
       user.Dob = profileDto.Dob;
       user.Sex = profileDto.Sex;
       user.Description = profileDto.Description ??= "";
+      user.Address = profileDto.Address ??= "";
       var res = await _userManager.UpdateAsync(user);
       return res.Succeeded ? NoContent() : Ok(res.Errors);
     }
