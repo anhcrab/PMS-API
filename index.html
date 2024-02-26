@@ -21,18 +21,26 @@
   <section>
     <!-- Modal -->
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Launch demo modal
+    <button type="button"
+      class="btn btn-primary ms-3 mt-3 px-4 text-black fw-semibold fs-4 terus-modal__contact-trigger-btn"
+      data-bs-toggle="modal" data-bs-target="#contactModal">
+      Xem thêm <i class="bi bi-arrow-right"></i>
+    </button>
+    <button type="button"
+      class="btn btn-primary ms-3 mt-3 px-4 text-black fw-bold fs-4 terus-modal__contact-trigger-btn"
+      data-bs-toggle="modal" data-bs-target="#contactModal" style="--border-style: dashed; --border-width: 2px;">
+      Ấn vào đây để được tư vấn tốt nhất
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static"
+    <div class="modal fade" id="contactModal" tabindex="-1" data-bs-backdrop="static"
       aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl modal-dialog-centered terus-modal__contact">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable terus-modal__contact">
         <div class="modal-content h-100" style="--bs-modal-border-radius: 0; --bs-modal-border-width: 0">
           <div class="modal-body h-100" style="--bs-modal-padding: 0">
             <div class="row h-100 gx-0">
-              <div class="col-lg-7 terus-modal__contact-mobile p-4 bg-black text-white flex-column justify-content-between">
+              <div
+                class="col-lg-7 terus-modal__contact-mobile p-4 bg-black text-white flex-column justify-content-between">
                 <div class="">
                   <h2 class="modal-title mb-4 fs-2 fw-semibold ft-lora text-light" id="exampleModalLabel">
                     Mang tới dịch vụ tốt nhất <br>cùng giá trị khác biệt cho khách hàng
@@ -42,8 +50,8 @@
                     hợp tác lâu dài nhằm mang lại các giá trị bền vững cho khách hàng.
                   </p>
                   <div class="terus-modal__contact-img d-flex justify-content-center flex-fill">
-                    <img style="height: 480px; margin-top: -50px;"
-                      src="https://terusvn.com/wp-content/uploads/2024/02/formimg.png" alt="lien-he-tu-van">
+                    <img class="black-shark" src="https://terusvn.com/wp-content/uploads/2024/02/formimg1.png"
+                      alt="lien-he-tu-van">
                   </div>
                 </div>
                 <div class="w-75 d-flex flex-wrap justify-content-stretch">
@@ -151,6 +159,8 @@
                     </div>
                   </form>
                 </div>
+                <img src="https://terusvn.com/wp-content/uploads/2024/02/formimg1.png" class="d-md-none white-shark"
+                  alt="terus">
                 <div class="fs-5 ft-lora text-center fw-semibold">
                   TERUS cam kết tuyệt đối không sử dụng thông tin của bạn để bán hoặc SPAM
                 </div>
@@ -162,20 +172,11 @@
     </div>
   </section>
   <script>
-    const forms = document.querySelectorAll('.needs-validation')
-
-    // Loop over them and prevent submission
-    Array.from(forms).forEach(form => {
-      form.addEventListener('submit', event => {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-
-        form.classList.add('was-validated')
-      }, false)
+    const form = document.getElementById("terus-modal__contact-form");
+    const btnClose = document.querySelector('.contactModalClose');
+    btnClose.addEventListener('click', () => {
+      form.classList.remove('was-validated')
     })
-    const form = document.getElementById("terus-modal__contact-form")
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       e.stopPropagation();

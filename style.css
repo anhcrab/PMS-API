@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap");
 
 .terus-modal__contact {
-  height: calc(100% - 56px);
+  height: calc(100vh - 56px);
 }
 
 .terus-btn__close {
@@ -42,6 +42,38 @@
 
 .terus-modal__contact-mobile {
   display: none !important;
+}
+
+.black-shark {
+  height: 450px;
+  /* margin-top: -50px; */
+}
+
+.white-shark {
+  height: 25vh;
+  width: auto;
+  width: fit-content;
+  display: grid;
+  align-self: center;
+}
+
+.terus-modal__contact-trigger-btn {
+  --border-style: solid;
+  --border-width: 1px;
+  --border-color: #000;
+  --shadow: #F0E15E;
+  background-color: #F0E15E;
+  border-radius: 50px;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+  box-shadow: 0px 0px 10px var(--shadow);
+}
+
+@media screen and (max-width: 414px) and (orientation: portrait) {
+  .terus-modal__contact {
+    height: unset;
+  }
 }
 
 @media (min-width: 992px) {
