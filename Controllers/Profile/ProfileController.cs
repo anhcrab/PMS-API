@@ -55,5 +55,36 @@ namespace api.Controllers.Profile
       if (!result.Succeeded) return StatusCode(500, result.Errors);
       return NoContent();
     }
+
+    [HttpPost("upload")]
+    public async Task<IActionResult> Upload(IFormFile file)
+    {
+      try
+      {
+        var result = await WriteFile(file);
+        return Ok(result);
+      }
+      catch (Exception)
+      {
+        throw;
+      }
+    }
+
+    private static async Task<string> WriteFile(IFormFile file)
+    {
+      try
+      {
+        var execpath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "terus-content", file.FileName);
+        using (var stream = new FileStream(execpath, FileMode.Create))
+        {
+          await file.CopyToAsync(stream);
+        }
+        return file.FileName;
+      }
+      catch (Exception)
+      {
+        throw;
+      }
+    }
   }
 }

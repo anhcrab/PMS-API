@@ -42,6 +42,7 @@ namespace api.Migrations
                     Sex = table.Column<string>(type: "longtext", nullable: false),
                     Dob = table.Column<string>(type: "longtext", nullable: false),
                     Hometown = table.Column<string>(type: "longtext", nullable: false),
+                    Address = table.Column<string>(type: "longtext", nullable: false),
                     Department = table.Column<int>(type: "int", nullable: false),
                     SupervisorId = table.Column<string>(type: "longtext", nullable: true),
                     Position = table.Column<string>(type: "longtext", nullable: false),
@@ -66,6 +67,20 @@ namespace api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "ProjectTypes",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: false),
+                    AdditionalInfo = table.Column<string>(type: "longtext", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectTypes", x => x.Id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -180,15 +195,49 @@ namespace api.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: false),
+                    ResponsibleId = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Progress = table.Column<string>(type: "longtext", nullable: false),
+                    TypeId = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Budget = table.Column<double>(type: "double", nullable: false),
+                    Deadline = table.Column<string>(type: "longtext", nullable: false),
+                    PaymentDate = table.Column<string>(type: "longtext", nullable: false),
+                    AdditionalInfo = table.Column<string>(type: "longtext", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Projects_AspNetUsers_ResponsibleId",
+                        column: x => x.ResponsibleId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Projects_ProjectTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "ProjectTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "18618d4a-b9cf-42e3-936f-2c9763b43c36", "990958d5-7442-4f92-8516-eb2a04edf782", "Admin", "ADMIN" },
-                    { "9d5236d4-0539-4741-ae7e-d28c7613479b", "f283bf1e-9700-4be1-a641-4e19d333cd49", "Manager", "MANAGER" },
-                    { "b6236bbf-f743-472f-803a-b82727b56c7b", "116ec0f9-ba99-4e76-9ad4-37a23029c32a", "Client", "CLIENT" },
-                    { "c824c091-b2cf-40c1-b581-781f13eb45d9", "6980ddd7-2bf6-4ea3-b749-d290c6f7c892", "Employee", "EMPLOYEE" }
+                    { "00cccc62-fa7f-4e18-9b9f-1785af79de1c", "fab610fa-5bd1-4342-9ffc-ca40c76d10bd", "Client", "CLIENT" },
+                    { "0e4f891f-87d8-4aee-8592-951058cfe4db", "c9a7888e-abba-488d-9082-35bb3f5be25e", "Admin", "ADMIN" },
+                    { "a10ad3d2-f94f-4db0-b4f6-0138f516e4e0", "fb05b890-5c56-49d4-b02d-e0994a7ab2ce", "Employee", "EMPLOYEE" },
+                    { "ddbff0ca-423c-41bb-97d6-34c53effb3af", "60c068d8-577a-4fc7-ac86-252ee1624a99", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -227,6 +276,16 @@ namespace api.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_ResponsibleId",
+                table: "Projects",
+                column: "ResponsibleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projects_TypeId",
+                table: "Projects",
+                column: "TypeId");
         }
 
         /// <inheritdoc />
@@ -248,10 +307,16 @@ namespace api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Projects");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "ProjectTypes");
         }
     }
 }

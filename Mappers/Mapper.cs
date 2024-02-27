@@ -1,4 +1,5 @@
 using api.Dtos;
+using api.Helpers;
 using api.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,27 +7,6 @@ namespace api.Mappers
 {
   public static class Mapper
   {
-    // public static EmployeeDto ToEmployeeDto(this AppUser employee)
-    // {
-    //   return new EmployeeDto
-    //   {
-    //     UserId = employee.Id,
-    //     FirstName = employee.FirstName,
-    //     LastName = employee.LastName,
-    //     UserName = employee.UserName,
-    //     Email = employee.Email,
-    //     Sex = employee.Sex,
-    //     Dob = employee.Dob,
-    //     Description = employee.Description,
-    //     AdditionalInfo = employee.AdditionalInfo,
-    //     Hometown = employee.Hometown,
-    //     // Position = employee.Position,
-    //     // Supervisor = employee.Supervisor.ToEmployeeDto(),
-    //     // Department = employee.Department.ToDepartmentDto(),
-    //     // TeamMembers = employee.TeamMembers.Select(x => x.ToEmployeeDto()).ToList()
-    //   };
-    // }
-
     public static UserDto ToUserDto(this AppUser appUser)
     {
       return new UserDto {
@@ -63,6 +43,32 @@ namespace api.Mappers
       {
         Id = role.Id,
         Name = role.Name!
+      };
+    }
+    public static ProjectTypeDto ToProjectTypeDto(this ProjectType type)
+    {
+      return new ProjectTypeDto
+      {
+        Id = type.Id,
+        Name = type.Name,
+        AdditionalInfo = type.AdditionalInfo
+      };
+    }
+    public static ProjectDto ToProjectDto(this Project project)
+    {
+      return new ProjectDto
+      {
+        Id = project.Id,
+        Name = project.Name,
+        ResponsibleId = project.ResponsibleId,
+        Progress = project.Progress,
+        TypeId = project.TypeId,
+        Budget = project.Budget,
+        Deadline = project.Deadline,
+        PaymentDate = project.PaymentDate,
+        AdditionalInfo = project.AdditionalInfo,
+        Status = project.Status.ToString(),
+        Created = project.Created.ToString()
       };
     }
   }

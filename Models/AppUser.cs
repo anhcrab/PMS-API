@@ -17,5 +17,6 @@ namespace api.Models
     public string Description { get; set; } = "";
     public string AdditionalInfo { get; set; } = "";
     public EmployeeStatuses Status { get; set; } = EmployeeStatuses.FREE;
+    public List<Project>? Projects { get; set; }
   }
 }

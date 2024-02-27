@@ -47,29 +47,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "49c8ebf0-b9c3-4d9c-90fb-d341b5f633de",
-                            ConcurrencyStamp = "1e26d399-ed16-4184-8f7e-49467cbf6ac8",
+                            Id = "0e4f891f-87d8-4aee-8592-951058cfe4db",
+                            ConcurrencyStamp = "c9a7888e-abba-488d-9082-35bb3f5be25e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "f53ada1d-996a-47e6-8b08-35c401d995dc",
-                            ConcurrencyStamp = "5fe96d25-621a-4e1d-8e6d-ce584eba3c36",
+                            Id = "ddbff0ca-423c-41bb-97d6-34c53effb3af",
+                            ConcurrencyStamp = "60c068d8-577a-4fc7-ac86-252ee1624a99",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "91a2e8f0-351a-4abc-bca4-b85a8c4ec6af",
-                            ConcurrencyStamp = "e4f4bd28-5706-4847-b46f-8d6bea63e98b",
+                            Id = "a10ad3d2-f94f-4db0-b4f6-0138f516e4e0",
+                            ConcurrencyStamp = "fb05b890-5c56-49d4-b02d-e0994a7ab2ce",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "e78788f9-30c3-4466-9516-0083dea205bf",
-                            ConcurrencyStamp = "9c20631e-8109-4b29-9d23-748eddd0428a",
+                            Id = "00cccc62-fa7f-4e18-9b9f-1785af79de1c",
+                            ConcurrencyStamp = "fab610fa-5bd1-4342-9ffc-ca40c76d10bd",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -286,6 +286,75 @@ namespace api.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("api.Models.Project", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("AdditionalInfo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("Budget")
+                        .HasColumnType("double");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Deadline")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PaymentDate")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Progress")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ResponsibleId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResponsibleId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("api.Models.ProjectType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("AdditionalInfo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProjectTypes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -335,6 +404,35 @@ namespace api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("api.Models.Project", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "Responsible")
+                        .WithMany("Projects")
+                        .HasForeignKey("ResponsibleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.ProjectType", "Type")
+                        .WithMany("Projects")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Responsible");
+
+                    b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("api.Models.AppUser", b =>
+                {
+                    b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("api.Models.ProjectType", b =>
+                {
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }

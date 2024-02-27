@@ -107,21 +107,24 @@ builder.Services.AddAuthentication(options =>
 
 // Register Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IProjectTypeRepository, ProjectTypeRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddTransient<ISendMailService, SendMailService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+builder.Services.AddTransient<IProjectTypeService, ProjectTypeService>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+  app.UseSwagger();
+  app.UseSwaggerUI();
 }
-app.UseSwagger();
-app.UseSwaggerUI();
 
 app.UseCors("corsapp");
 

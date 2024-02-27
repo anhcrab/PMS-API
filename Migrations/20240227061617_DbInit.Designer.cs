@@ -11,7 +11,7 @@ using api.Databases;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240223073849_DbInit")]
+    [Migration("20240227061617_DbInit")]
     partial class DbInit
     {
         /// <inheritdoc />
@@ -50,29 +50,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "18618d4a-b9cf-42e3-936f-2c9763b43c36",
-                            ConcurrencyStamp = "990958d5-7442-4f92-8516-eb2a04edf782",
+                            Id = "0e4f891f-87d8-4aee-8592-951058cfe4db",
+                            ConcurrencyStamp = "c9a7888e-abba-488d-9082-35bb3f5be25e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9d5236d4-0539-4741-ae7e-d28c7613479b",
-                            ConcurrencyStamp = "f283bf1e-9700-4be1-a641-4e19d333cd49",
+                            Id = "ddbff0ca-423c-41bb-97d6-34c53effb3af",
+                            ConcurrencyStamp = "60c068d8-577a-4fc7-ac86-252ee1624a99",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "c824c091-b2cf-40c1-b581-781f13eb45d9",
-                            ConcurrencyStamp = "6980ddd7-2bf6-4ea3-b749-d290c6f7c892",
+                            Id = "a10ad3d2-f94f-4db0-b4f6-0138f516e4e0",
+                            ConcurrencyStamp = "fb05b890-5c56-49d4-b02d-e0994a7ab2ce",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "b6236bbf-f743-472f-803a-b82727b56c7b",
-                            ConcurrencyStamp = "116ec0f9-ba99-4e76-9ad4-37a23029c32a",
+                            Id = "00cccc62-fa7f-4e18-9b9f-1785af79de1c",
+                            ConcurrencyStamp = "fab610fa-5bd1-4342-9ffc-ca40c76d10bd",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -192,6 +192,10 @@ namespace api.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
@@ -285,6 +289,75 @@ namespace api.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("api.Models.Project", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("AdditionalInfo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<double>("Budget")
+                        .HasColumnType("double");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Deadline")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PaymentDate")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Progress")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ResponsibleId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResponsibleId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("api.Models.ProjectType", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("AdditionalInfo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProjectTypes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -334,6 +407,35 @@ namespace api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("api.Models.Project", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "Responsible")
+                        .WithMany("Projects")
+                        .HasForeignKey("ResponsibleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.ProjectType", "Type")
+                        .WithMany("Projects")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Responsible");
+
+                    b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("api.Models.AppUser", b =>
+                {
+                    b.Navigation("Projects");
+                });
+
+            modelBuilder.Entity("api.Models.ProjectType", b =>
+                {
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }
