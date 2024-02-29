@@ -1,6 +1,6 @@
-using api.Dtos;
+using api.Dtos.Employees;
 using api.Extensions;
-using api.Interfaces;
+using api.Interfaces.Employees;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

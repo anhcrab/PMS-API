@@ -1,4 +1,4 @@
-namespace api.Dtos
+namespace api.Dtos.Project
 {
   public class ProjectTypeDto
   {

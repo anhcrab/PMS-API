@@ -1,3 +1,5 @@
+using api.Dtos.Core;
+
 namespace api.Dtos
 {
   public class ProfileExtDto : ProfileDto

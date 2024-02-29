@@ -1,6 +1,6 @@
-using api.Dtos;
+using api.Dtos.Core;
 using api.Helpers;
-using api.Interfaces;
+using api.Interfaces.Core;
 using api.Mappers;
 using api.Models;
 using Microsoft.AspNetCore.Identity;

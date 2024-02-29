@@ -1,5 +1,6 @@
 using api.Dtos;
-using api.Helpers;
+using api.Dtos.Core;
+using api.Dtos.Project;
 using api.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -68,7 +69,9 @@ namespace api.Mappers
         PaymentDate = project.PaymentDate,
         AdditionalInfo = project.AdditionalInfo,
         Status = project.Status.ToString(),
-        Created = project.Created.ToString()
+        CreationDate = project.CreationDate.ToString(),
+        UpdatedDate = project.UpdatedDate.ToString(),
+        DeletedDate = project.DeletedDate.ToString()
       };
     }
   }

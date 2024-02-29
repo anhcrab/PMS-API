@@ -1,7 +1,4 @@
-using api.Helpers;
-using Microsoft.AspNetCore.Identity;
-
-namespace api.Dtos
+namespace api.Dtos.Core
 {
   public class UserDto
   {

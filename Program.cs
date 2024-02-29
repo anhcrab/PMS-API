@@ -1,5 +1,7 @@
 using api.Databases;
-using api.Interfaces;
+using api.Interfaces.Core;
+using api.Interfaces.Employees;
+using api.Interfaces.Projects;
 using api.Models;
 using api.Repositories;
 using api.Services;

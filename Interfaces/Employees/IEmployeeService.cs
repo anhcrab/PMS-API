@@ -1,7 +1,7 @@
-using api.Dtos;
-using api.Helpers;
+using api.Dtos.Core;
+using api.Dtos.Employees;
 
-namespace api.Interfaces
+namespace api.Interfaces.Employees
 {
   public interface IEmployeeService
   {

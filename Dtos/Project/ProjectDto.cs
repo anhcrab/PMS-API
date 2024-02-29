@@ -1,4 +1,4 @@
-namespace api.Dtos
+namespace api.Dtos.Project
 {
   public class ProjectDto
   {
@@ -12,6 +12,8 @@ namespace api.Dtos
     public string? PaymentDate { get; set; }
     public string? AdditionalInfo { get; set; }
     public string? Status { get; set; }
-    public string? Created { get; set; }
+    public string? CreationDate { get; set; }
+    public string? UpdatedDate { get; set; }
+    public string? DeletedDate { get; set; }
   }
 }

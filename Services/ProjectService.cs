@@ -1,6 +1,6 @@
-using api.Dtos;
+using api.Dtos.Project;
 using api.Helpers;
-using api.Interfaces;
+using api.Interfaces.Projects;
 using api.Mappers;
 using api.Models;
 
@@ -18,6 +18,7 @@ namespace api.Services
 
     public async Task CreateAsync(ProjectDto project)
     {
+      var time = DateTime.Now;
       var newProject = new Project
       {
         Name = project.Name ??= "",
@@ -29,7 +30,8 @@ namespace api.Services
         PaymentDate = project.PaymentDate ??= "",
         AdditionalInfo = project.AdditionalInfo ??= "",
         Status = ToProjectStatus(project.Status ??= "PENDING"),
-        Created = DateTime.Now
+        CreationDate = time,
+        UpdatedDate = time
       };
       await _repository.CreateAsync(newProject);
     }
@@ -54,6 +56,7 @@ namespace api.Services
         existProject.PaymentDate = project.PaymentDate ??= "";
         existProject.AdditionalInfo = project.AdditionalInfo ??= "";
         existProject.Status = ToProjectStatus(project.Status ??= "PENDING");
+        existProject.UpdatedDate = DateTime.Now;
         await _repository.UpdateAsync(id, existProject);
       }
     }
@@ -63,7 +66,9 @@ namespace api.Services
       var existProject = await _repository.ReadAsync(id);
       if (existProject != null)
       {
-        existProject.Trash = true;
+        var now = DateTime.Now;
+        existProject.UpdatedDate = now;
+        existProject.DeletedDate = now;
         await _repository.UpdateAsync(id, existProject);
       }
     }
@@ -73,8 +78,8 @@ namespace api.Services
       var existProject = await _repository.ReadAsync(id);
       if (existProject != null)
       {
-        existProject.Trash = false;
-        await _repository.DeleteAsync(id);
+        existProject.UpdatedDate = DateTime.Now;
+        await _repository.UpdateAsync(id, existProject);
       }
     }
 

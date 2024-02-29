@@ -1,6 +1,6 @@
-using api.Dtos;
+using api.Dtos.Project;
 
-namespace api.Interfaces
+namespace api.Interfaces.Projects
 {
   public interface IProjectService
   {

@@ -1,5 +1,5 @@
-using api.Dtos;
-using api.Interfaces;
+using api.Dtos.Project;
+using api.Interfaces.Projects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

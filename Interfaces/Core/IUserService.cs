@@ -1,6 +1,6 @@
-using api.Dtos;
+using api.Dtos.Core;
 
-namespace api.Interfaces
+namespace api.Interfaces.Core
 {
   public interface IUserService
   {

@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using api.Helpers;
 
-namespace api.Dtos
+namespace api.Dtos.Employees
 {
   public class NewEmployee
   {

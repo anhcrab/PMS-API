@@ -1,5 +1,5 @@
 using api.Dtos;
-using api.Interfaces;
+using api.Interfaces.Core;
 using api.Mappers;
 using Microsoft.IdentityModel.Tokens;
 

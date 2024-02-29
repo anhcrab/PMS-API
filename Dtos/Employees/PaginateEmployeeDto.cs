@@ -1,5 +1,7 @@
 
-namespace api.Dtos
+using api.Dtos.Core;
+
+namespace api.Dtos.Employees
 {
   public class PaginateEmployeeDto
   {

@@ -11,7 +11,6 @@ namespace api.Databases
     public DbSet<Project> Projects { get; set; }
     public DbSet<ProjectType> ProjectTypes { get; set; }
     #endregion
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
       builder.Entity<AppUser>(opts =>

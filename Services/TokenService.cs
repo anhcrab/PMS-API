@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using api.Dtos;
-using api.Interfaces;
+using api.Dtos.Core;
+using api.Interfaces.Core;
 using api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;

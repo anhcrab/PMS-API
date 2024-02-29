@@ -1,6 +1,6 @@
 using api.Dtos;
 
-namespace api.Interfaces
+namespace api.Interfaces.Core
 {
   public interface IProfileService
   {

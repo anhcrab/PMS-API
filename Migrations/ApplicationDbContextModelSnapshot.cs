@@ -47,29 +47,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0e4f891f-87d8-4aee-8592-951058cfe4db",
-                            ConcurrencyStamp = "c9a7888e-abba-488d-9082-35bb3f5be25e",
+                            Id = "01fff3e9-c5ef-4409-afb4-df2c11bbc338",
+                            ConcurrencyStamp = "93ab0ccb-9cac-4614-b435-bfd47536fb4c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ddbff0ca-423c-41bb-97d6-34c53effb3af",
-                            ConcurrencyStamp = "60c068d8-577a-4fc7-ac86-252ee1624a99",
+                            Id = "7436a8c4-aef5-47f7-98c2-265cf38984d6",
+                            ConcurrencyStamp = "601c7915-5e0e-40e8-a744-d07983527527",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "a10ad3d2-f94f-4db0-b4f6-0138f516e4e0",
-                            ConcurrencyStamp = "fb05b890-5c56-49d4-b02d-e0994a7ab2ce",
+                            Id = "ee48e6e4-c3ce-4aa0-8385-defb25501402",
+                            ConcurrencyStamp = "876718a5-3e1d-4f60-adfc-946c1a667b7e",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "00cccc62-fa7f-4e18-9b9f-1785af79de1c",
-                            ConcurrencyStamp = "fab610fa-5bd1-4342-9ffc-ca40c76d10bd",
+                            Id = "c9dcbd54-e487-4746-a22b-d9b52d57a8d2",
+                            ConcurrencyStamp = "ea6dbc15-a120-4c10-ae54-420be85e2667",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -298,12 +298,15 @@ namespace api.Migrations
                     b.Property<double>("Budget")
                         .HasColumnType("double");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Deadline")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime>("DeletedDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -327,6 +330,9 @@ namespace api.Migrations
                     b.Property<string>("TypeId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 

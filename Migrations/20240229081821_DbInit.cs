@@ -209,7 +209,9 @@ namespace api.Migrations
                     PaymentDate = table.Column<string>(type: "longtext", nullable: false),
                     AdditionalInfo = table.Column<string>(type: "longtext", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -234,10 +236,10 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "00cccc62-fa7f-4e18-9b9f-1785af79de1c", "fab610fa-5bd1-4342-9ffc-ca40c76d10bd", "Client", "CLIENT" },
-                    { "0e4f891f-87d8-4aee-8592-951058cfe4db", "c9a7888e-abba-488d-9082-35bb3f5be25e", "Admin", "ADMIN" },
-                    { "a10ad3d2-f94f-4db0-b4f6-0138f516e4e0", "fb05b890-5c56-49d4-b02d-e0994a7ab2ce", "Employee", "EMPLOYEE" },
-                    { "ddbff0ca-423c-41bb-97d6-34c53effb3af", "60c068d8-577a-4fc7-ac86-252ee1624a99", "Manager", "MANAGER" }
+                    { "01fff3e9-c5ef-4409-afb4-df2c11bbc338", "93ab0ccb-9cac-4614-b435-bfd47536fb4c", "Admin", "ADMIN" },
+                    { "7436a8c4-aef5-47f7-98c2-265cf38984d6", "601c7915-5e0e-40e8-a744-d07983527527", "Manager", "MANAGER" },
+                    { "c9dcbd54-e487-4746-a22b-d9b52d57a8d2", "ea6dbc15-a120-4c10-ae54-420be85e2667", "Client", "CLIENT" },
+                    { "ee48e6e4-c3ce-4aa0-8385-defb25501402", "876718a5-3e1d-4f60-adfc-946c1a667b7e", "Employee", "EMPLOYEE" }
                 });
 
             migrationBuilder.CreateIndex(

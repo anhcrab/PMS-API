@@ -1,6 +1,6 @@
 using api.Helpers;
 
-namespace api.Interfaces
+namespace api.Interfaces.Core
 {
   public interface ISendMailService
   {

@@ -1,5 +1,5 @@
 using api.Helpers;
-using api.Interfaces;
+using api.Interfaces.Core;
 using MailKit.Security;
 using MimeKit;
 
