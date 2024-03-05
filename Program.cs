@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using api.Databases;
 using api.Interfaces.Core;
 using api.Interfaces.Employees;
@@ -19,8 +20,9 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddHttpContextAccessor();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opts =>
@@ -114,10 +116,11 @@ builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddTransient<ISendMailService, SendMailService>();
-builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IRoleService, RoleService>();
-builder.Services.AddTransient<IEmployeeService, EmployeeService>();
-builder.Services.AddTransient<IProjectTypeService, ProjectTypeService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IProjectTypeService, ProjectTypeService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
 
 var app = builder.Build();
 

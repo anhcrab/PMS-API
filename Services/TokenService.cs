@@ -43,7 +43,7 @@ namespace api.Services
       var tokenDescriptor = new SecurityTokenDescriptor
       {
         Subject = new ClaimsIdentity(claims),
-        Expires = DateTime.Now.AddMinutes(30),
+        Expires = DateTime.Now.AddDays(1),
         SigningCredentials = credentials,
         Issuer = _config["JWT:ValidIssuer"],
         Audience = _config["JWT:ValidAudience"]

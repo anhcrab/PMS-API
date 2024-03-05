@@ -49,6 +49,9 @@ namespace api.Migrations
                     Description = table.Column<string>(type: "longtext", nullable: false),
                     AdditionalInfo = table.Column<string>(type: "longtext", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
@@ -201,7 +204,7 @@ namespace api.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false),
                     Name = table.Column<string>(type: "longtext", nullable: false),
-                    ResponsibleId = table.Column<string>(type: "varchar(255)", nullable: false),
+                    ResponsibleId = table.Column<string>(type: "longtext", nullable: false),
                     Progress = table.Column<string>(type: "longtext", nullable: false),
                     TypeId = table.Column<string>(type: "varchar(255)", nullable: false),
                     Budget = table.Column<double>(type: "double", nullable: false),
@@ -211,21 +214,71 @@ namespace api.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DeletedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    DeletedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projects", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projects_AspNetUsers_ResponsibleId",
-                        column: x => x.ResponsibleId,
+                        name: "FK_Projects_ProjectTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "ProjectTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "AppUserProject",
+                columns: table => new
+                {
+                    MembersId = table.Column<string>(type: "varchar(255)", nullable: false),
+                    ProjectsId = table.Column<string>(type: "varchar(255)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUserProject", x => new { x.MembersId, x.ProjectsId });
+                    table.ForeignKey(
+                        name: "FK_AppUserProject_AspNetUsers_MembersId",
+                        column: x => x.MembersId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Projects_ProjectTypes_TypeId",
-                        column: x => x.TypeId,
-                        principalTable: "ProjectTypes",
+                        name: "FK_AppUserProject_Projects_ProjectsId",
+                        column: x => x.ProjectsId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "WorkTasks",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false),
+                    Name = table.Column<string>(type: "longtext", nullable: false),
+                    Content = table.Column<string>(type: "longtext", nullable: false),
+                    IsCompleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ProjectId = table.Column<string>(type: "varchar(255)", nullable: false),
+                    MemberId = table.Column<string>(type: "varchar(255)", nullable: true),
+                    CreationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkTasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkTasks_AspNetUsers_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_WorkTasks_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -236,11 +289,16 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "01fff3e9-c5ef-4409-afb4-df2c11bbc338", "93ab0ccb-9cac-4614-b435-bfd47536fb4c", "Admin", "ADMIN" },
-                    { "7436a8c4-aef5-47f7-98c2-265cf38984d6", "601c7915-5e0e-40e8-a744-d07983527527", "Manager", "MANAGER" },
-                    { "c9dcbd54-e487-4746-a22b-d9b52d57a8d2", "ea6dbc15-a120-4c10-ae54-420be85e2667", "Client", "CLIENT" },
-                    { "ee48e6e4-c3ce-4aa0-8385-defb25501402", "876718a5-3e1d-4f60-adfc-946c1a667b7e", "Employee", "EMPLOYEE" }
+                    { "0c47a6ce-0073-4c7e-a518-876ab12cee5c", "b2d1bc1d-a453-4b93-ae26-8ba8f5ed8bfe", "Client", "CLIENT" },
+                    { "8c198f64-27ec-43cb-87f1-c7c4f3f62361", "9f6f20ae-8e14-49e4-9fa0-29f87866a4e5", "Manager", "MANAGER" },
+                    { "923be03a-503f-4d3d-8cdf-89aa0659b4ad", "6b4bbe67-701b-4547-99f0-c41ec5f4e496", "Employee", "EMPLOYEE" },
+                    { "ed17fce9-06d5-400e-a97d-6c26622c90f5", "54fb566c-481a-442b-8921-a7647fdf708f", "Admin", "ADMIN" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUserProject_ProjectsId",
+                table: "AppUserProject",
+                column: "ProjectsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -280,19 +338,27 @@ namespace api.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_ResponsibleId",
-                table: "Projects",
-                column: "ResponsibleId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Projects_TypeId",
                 table: "Projects",
                 column: "TypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkTasks_MemberId",
+                table: "WorkTasks",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkTasks_ProjectId",
+                table: "WorkTasks",
+                column: "ProjectId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AppUserProject");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -309,13 +375,16 @@ namespace api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "WorkTasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
 
             migrationBuilder.DropTable(
                 name: "ProjectTypes");

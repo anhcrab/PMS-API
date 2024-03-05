@@ -1,6 +1,7 @@
 using api.Dtos.Core;
 using api.Interfaces.Core;
 using api.Mappers;
+using api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

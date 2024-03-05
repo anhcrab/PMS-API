@@ -1,4 +1,4 @@
-using api.Dtos.Project;
+using api.Dtos.Projects;
 using api.Interfaces.Projects;
 using api.Mappers;
 using api.Models;
@@ -9,13 +9,13 @@ namespace api.Services
   {
     private readonly IProjectTypeRepository _repository = repository;
 
-    public async Task<List<ProjectTypeDto>?> ListAsync()
+    public async Task<List<ProjectTypeDto>> ListAsync()
     {
       var list = await _repository.ListAsync();
       return list.Select(t => t.ToProjectTypeDto()).ToList();
     }
 
-    public async Task CreateAsync(ProjectTypeDto type)
+    public async Task CreateAsync(NewProjectTypeDto type)
     {
       var newType = new ProjectType
       {

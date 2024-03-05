@@ -77,7 +77,7 @@ namespace api.Controllers.Auth
           return BadRequest(ModelState);
         }
         var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == loginDto.Email);
-        if (user == null)
+        if (user == null || (user.DeletedDate != null && DateTime.Compare(user.DeletedDate ??= DateTime.Now, user.UpdatedDate) > 0))
         {
           return Unauthorized("Invalid Email");
         }
@@ -93,6 +93,7 @@ namespace api.Controllers.Auth
         return StatusCode(500, e);
       }
     }
+
     [HttpGet("testmail")]
     public async Task<IActionResult> TestMail()
     {

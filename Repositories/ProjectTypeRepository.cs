@@ -11,7 +11,7 @@ namespace api.Repositories
 
     public async Task<List<ProjectType>> ListAsync()
     {
-      return await _context.ProjectTypes.ToListAsync();
+      return await _context.ProjectTypes.Include(t => t.Projects).ToListAsync();
     }
 
     public async Task CreateAsync(ProjectType type)

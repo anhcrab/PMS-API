@@ -1,4 +1,6 @@
-namespace api.Dtos.Project
+using api.Dtos.Core;
+
+namespace api.Dtos.Projects
 {
   public class ProjectDto
   {
@@ -15,5 +17,7 @@ namespace api.Dtos.Project
     public string? CreationDate { get; set; }
     public string? UpdatedDate { get; set; }
     public string? DeletedDate { get; set; }
+    public ProjectTypeDto? Type { get; set; }
+    public UserDto? Responsible { get; set; }
   }
 }

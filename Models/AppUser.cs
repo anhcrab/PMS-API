@@ -17,6 +17,10 @@ namespace api.Models
     public string Description { get; set; } = "";
     public string AdditionalInfo { get; set; } = "";
     public EmployeeStatuses Status { get; set; } = EmployeeStatuses.FREE;
-    public List<Project>? Projects { get; set; }
+    public DateTime CreationDate { get; set; } = DateTime.Now;
+    public DateTime UpdatedDate { get; set; } = DateTime.Now;
+    public DateTime? DeletedDate { get; set; }
+    public List<Project> Projects { get; set; } = [];
+    public List<WorkTask> Tasks { get; set; } = [];
   }
 }

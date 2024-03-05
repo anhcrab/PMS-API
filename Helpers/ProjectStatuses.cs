@@ -2,9 +2,9 @@ namespace api.Helpers
 {
   public enum ProjectStatuses
   {
-    PENDING = 0,
-    ACTIVE = 1,
-    COMPLETE = 2,
-    CLOSED = 3
+    NEW = 0, // Mới
+    ACTIVE = 1, // Đang triển khai
+    COMPLETED = 2, // Đã hoàn thành
+    CLOSED = 3 // Đã đóng hoặc hủy
   }
 }

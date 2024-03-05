@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using api.Dtos.Core;
 using api.Helpers;
 using api.Interfaces.Core;
@@ -62,6 +63,7 @@ namespace api.Services
         user.Position = userDto.Position ??= "";
         user.PhoneNumber = userDto.PhoneNumber ??= "";
         user.SupervisorId = userDto.SupervisorId ??= "";
+        user.Address = userDto.Address ??= "";
         user.Description = userDto.Description ??= "";
         user.AdditionalInfo = userDto.AdditionalInfo ??= "";
         user.Status = ToEmployeeStatus(userDto.Status);
@@ -83,7 +85,7 @@ namespace api.Services
     }
 
     private static EmployeeStatuses ToEmployeeStatus(string str)
-    { 
+    {
       return str switch
       {
         "EMPLOYED" => EmployeeStatuses.EMPLOYED,
@@ -91,6 +93,141 @@ namespace api.Services
         "RETIRED" => EmployeeStatuses.RETIRED,
         _ => EmployeeStatuses.FREE,
       };
+    }
+
+    public async Task<PaginateUserDto> PaginateAsync(
+      int limit = 20,
+      int page = 1,
+      string? role = null,
+      string? search = null
+    )
+    {
+      var list = await _userManager.Users.ToListAsync();
+      if (role != null)
+      {
+        list = [.. (await _userManager.GetUsersInRoleAsync(role))];
+      }
+      if (limit == -1)
+      {
+        return new PaginateUserDto
+        {
+          TotalItems = list.Count,
+          TotalPages = 1,
+          Items = list.Select(user => user.ToUserDto()).ToList()
+        };
+      }
+      var users = list
+        .Where(user =>
+        {
+          if (user.DeletedDate == null) return true;
+          var result = DateTime.Compare(user.DeletedDate ??= DateTime.Now, user.UpdatedDate);
+          return result < 0;
+        })
+        .Where(u => search == null || search == "" || Regex.IsMatch(u.UserName! + u.FirstName + u.LastName, Regex.Escape(search), RegexOptions.IgnoreCase))
+        .ToList();
+      var totalItems = users?.Count;
+      var totalPages = (int)Math.Ceiling((decimal)(totalItems! / limit));
+      var items = users?
+        .Skip((page - 1) * limit)
+        .Take(limit)
+        .Select(u => u.ToUserDto())
+        .ToList();
+      return new PaginateUserDto
+      {
+        TotalPages = totalPages,
+        TotalItems = (int)totalItems!,
+        Items = items
+      };
+    }
+
+    public async Task<PaginateUserDto> TrashView(int limit = 20, int page = 1, string? role = null, string? search = null)
+    {
+      var list = await _userManager.Users.ToListAsync();
+      if (role != null)
+      {
+        list = [.. (await _userManager.GetUsersInRoleAsync(role))];
+      }
+      if (limit == -1)
+      {
+        return new PaginateUserDto
+        {
+          TotalItems = list.Count,
+          TotalPages = 1,
+          Items = list.Where(user =>
+          {
+            if (user.DeletedDate == null) return false;
+            var result = DateTime.Compare(user.DeletedDate ??= DateTime.Now, user.UpdatedDate);
+            return result > 0;
+          }).Select(user => user.ToUserDto()).ToList()
+        };
+      }
+      var users = list
+        .Where(user =>
+        {
+          if (user.DeletedDate == null) return false;
+          var result = DateTime.Compare(user.DeletedDate ??= DateTime.Now, user.UpdatedDate);
+          return result > 0;
+        })
+        .Where(u => search == null || search == "" || Regex.IsMatch(u.UserName! + u.FirstName + u.LastName, Regex.Escape(search), RegexOptions.IgnoreCase))
+        .ToList();
+      var totalItems = users?.Count;
+      var totalPages = (int)Math.Ceiling((decimal)(totalItems! / limit));
+      var items = users?
+        .Skip((page - 1) * limit)
+        .Take(limit)
+        .Select(u => u.ToUserDto())
+        .ToList();
+      return new PaginateUserDto
+      {
+        TotalPages = totalPages,
+        TotalItems = (int)totalItems!,
+        Items = items
+      };
+    }
+
+    public async Task MultiDeleteAsync(List<string>? ids)
+    {
+      for (var i = 0; i < ids?.Count; i++)
+      {
+        var user = await _userManager.FindByIdAsync(ids.ElementAt(i));
+        await _userManager.DeleteAsync(user!);
+      }
+    }
+
+    public async Task TrashAsync(string id)
+    {
+      var user = await _userManager.FindByIdAsync(id);
+      if (user != null)
+      {
+        user.DeletedDate = DateTime.Now;
+        await _userManager.UpdateAsync(user);
+      }
+    }
+
+    public async Task MultiTrashAsync(List<string>? ids)
+    {
+      for (var i = 0; i < ids?.Count; i++)
+      {
+        await TrashAsync(ids.ElementAt(i));
+      }
+    }
+
+    public async Task RestoreAsync(string id)
+    {
+      var user = await _userManager.FindByIdAsync(id);
+      if (user != null)
+      {
+        user.UpdatedDate = DateTime.Now;
+        await _userManager.UpdateAsync(user);
+      }
+    }
+
+    public async Task MultiRestoreAsync(List<string>? ids)
+    {
+      for (var i = 0; i < ids?.Count; i++)
+      {
+        await RestoreAsync(ids.ElementAt(i));
+      }
     }
   }
 }

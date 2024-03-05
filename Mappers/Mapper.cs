@@ -1,6 +1,6 @@
 using api.Dtos;
 using api.Dtos.Core;
-using api.Dtos.Project;
+using api.Dtos.Projects;
 using api.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -52,7 +52,8 @@ namespace api.Mappers
       {
         Id = type.Id,
         Name = type.Name,
-        AdditionalInfo = type.AdditionalInfo
+        AdditionalInfo = type.AdditionalInfo,
+        Projects = type.Projects.Select(p => p.ToProjectDto()).ToList()
       };
     }
     public static ProjectDto ToProjectDto(this Project project)
@@ -71,7 +72,8 @@ namespace api.Mappers
         Status = project.Status.ToString(),
         CreationDate = project.CreationDate.ToString(),
         UpdatedDate = project.UpdatedDate.ToString(),
-        DeletedDate = project.DeletedDate.ToString()
+        DeletedDate = project.DeletedDate.ToString(),
+        Type = project.Type?.ToProjectTypeDto(),
       };
     }
   }
