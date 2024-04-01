@@ -11,8 +11,8 @@ using api.Databases;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240305132500_DbInit")]
-    partial class DbInit
+    [Migration("20240315130402_AddTask")]
+    partial class AddTask
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,21 +21,6 @@ namespace api.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("AppUserProject", b =>
-                {
-                    b.Property<string>("MembersId")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("ProjectsId")
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("MembersId", "ProjectsId");
-
-                    b.HasIndex("ProjectsId");
-
-                    b.ToTable("AppUserProject");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -65,29 +50,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ed17fce9-06d5-400e-a97d-6c26622c90f5",
-                            ConcurrencyStamp = "54fb566c-481a-442b-8921-a7647fdf708f",
+                            Id = "11e0a8ae-8cec-4e8d-9b7f-21fe0af58b74",
+                            ConcurrencyStamp = "d8cb802a-f38d-47fe-b3ad-4949f859fd66",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "8c198f64-27ec-43cb-87f1-c7c4f3f62361",
-                            ConcurrencyStamp = "9f6f20ae-8e14-49e4-9fa0-29f87866a4e5",
+                            Id = "b370661d-b0ca-4ad3-8d54-2211dd7e0fb2",
+                            ConcurrencyStamp = "6abd503b-33d1-4a7d-9c36-69bc67dd7f20",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "923be03a-503f-4d3d-8cdf-89aa0659b4ad",
-                            ConcurrencyStamp = "6b4bbe67-701b-4547-99f0-c41ec5f4e496",
+                            Id = "aa00124d-de5f-4f38-b7a2-af54104f1b82",
+                            ConcurrencyStamp = "b28859f4-c1c6-431f-911d-15cbe459da56",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "0c47a6ce-0073-4c7e-a518-876ab12cee5c",
-                            ConcurrencyStamp = "b2d1bc1d-a453-4b93-ae26-8ba8f5ed8bfe",
+                            Id = "a7b9681f-9efa-4a46-9e2b-dafcd3ef7f1f",
+                            ConcurrencyStamp = "aa366bcc-1d3d-4190-bd80-904f371324fc",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -174,6 +159,18 @@ namespace api.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "40e56087-76f8-4c6b-b2b5-e6306014a8a2",
+                            RoleId = "11e0a8ae-8cec-4e8d-9b7f-21fe0af58b74"
+                        },
+                        new
+                        {
+                            UserId = "1476e100-92cf-44b4-b384-82d87939fc95",
+                            RoleId = "11e0a8ae-8cec-4e8d-9b7f-21fe0af58b74"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -311,6 +308,66 @@ namespace api.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "40e56087-76f8-4c6b-b2b5-e6306014a8a2",
+                            AccessFailedCount = 0,
+                            AdditionalInfo = "",
+                            Address = "",
+                            ConcurrencyStamp = "46feb90c-c183-4869-9671-703e94e0af66",
+                            CreationDate = new DateTime(2024, 3, 15, 20, 4, 1, 166, DateTimeKind.Local).AddTicks(9696),
+                            Department = 0,
+                            Description = "",
+                            Dob = "",
+                            Email = "phucthinhterus@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Phúc Thịnh",
+                            Hometown = "",
+                            LastName = "Phan",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PHUCTHINHTERUS@GMAIL.COM",
+                            NormalizedUserName = "TERUS",
+                            PasswordHash = "AQAAAAIAAYagAAAAEADQpleDrVIkmjfiU+4gWm+9XtzVwalbS9NMLtgwTBqidRCa1myb2JjDUV0OHl67tw==",
+                            PhoneNumberConfirmed = false,
+                            Position = "",
+                            SecurityStamp = "21517668-e08e-445c-a535-07f455d9745a",
+                            Sex = "male",
+                            Status = 0,
+                            TwoFactorEnabled = false,
+                            UpdatedDate = new DateTime(2024, 3, 15, 20, 4, 1, 166, DateTimeKind.Local).AddTicks(9709),
+                            UserName = "terus"
+                        },
+                        new
+                        {
+                            Id = "1476e100-92cf-44b4-b384-82d87939fc95",
+                            AccessFailedCount = 0,
+                            AdditionalInfo = "",
+                            Address = "",
+                            ConcurrencyStamp = "f3df191f-2cd4-4a0a-9222-222fdcc6af47",
+                            CreationDate = new DateTime(2024, 3, 15, 20, 4, 1, 235, DateTimeKind.Local).AddTicks(6989),
+                            Department = 0,
+                            Description = "",
+                            Dob = "",
+                            Email = "anhcrafter@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Quang Anh",
+                            Hometown = "",
+                            LastName = "Đặng",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ANHCRAFTER@GMAIL.COM",
+                            NormalizedUserName = "DEV",
+                            PasswordHash = "AQAAAAIAAYagAAAAEP2oO3aEMmPklNGr3KrZvQ8DfgfSNjvIzh+UZtWi7AziSJaS7O3aTSbev+3HCUXrZA==",
+                            PhoneNumberConfirmed = false,
+                            Position = "",
+                            SecurityStamp = "b6a67828-3aa9-4fd8-96c9-7c5e8e7104c6",
+                            Sex = "male",
+                            Status = 0,
+                            TwoFactorEnabled = false,
+                            UpdatedDate = new DateTime(2024, 3, 15, 20, 4, 1, 235, DateTimeKind.Local).AddTicks(7001),
+                            UserName = "dev"
+                        });
                 });
 
             modelBuilder.Entity("api.Models.Project", b =>
@@ -368,6 +425,28 @@ namespace api.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("api.Models.ProjectMember", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("MemberId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("ProjectId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectMember");
+                });
+
             modelBuilder.Entity("api.Models.ProjectType", b =>
                 {
                     b.Property<string>("Id")
@@ -398,6 +477,10 @@ namespace api.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Deadline")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime(6)");
 
@@ -425,21 +508,6 @@ namespace api.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("WorkTasks");
-                });
-
-            modelBuilder.Entity("AppUserProject", b =>
-                {
-                    b.HasOne("api.Models.AppUser", null)
-                        .WithMany()
-                        .HasForeignKey("MembersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Models.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -504,6 +572,25 @@ namespace api.Migrations
                     b.Navigation("Type");
                 });
 
+            modelBuilder.Entity("api.Models.ProjectMember", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "Member")
+                        .WithMany("ProjectMembers")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.Project", "Project")
+                        .WithMany("ProjectMembers")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Member");
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("api.Models.WorkTask", b =>
                 {
                     b.HasOne("api.Models.AppUser", "Member")
@@ -523,11 +610,15 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.AppUser", b =>
                 {
+                    b.Navigation("ProjectMembers");
+
                     b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("api.Models.Project", b =>
                 {
+                    b.Navigation("ProjectMembers");
+
                     b.Navigation("Tasks");
                 });
 

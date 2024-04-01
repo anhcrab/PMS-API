@@ -1,5 +1,6 @@
 using api.Databases;
 using api.Interfaces.Projects;
+using api.Mappers;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,7 @@ namespace api.Repositories
 
     public async Task<List<ProjectType>> ListAsync()
     {
-      return await _context.ProjectTypes.Include(t => t.Projects).ToListAsync();
+      return await _context.ProjectTypes.ToListAsync();
     }
 
     public async Task CreateAsync(ProjectType type)

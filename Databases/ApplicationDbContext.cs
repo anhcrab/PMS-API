@@ -18,7 +18,11 @@ namespace api.Databases
       {
         opts
           .HasMany(u => u.Projects)
-          .WithMany(p => p.Members);
+          .WithMany(p => p.Members)
+          .UsingEntity<ProjectMember>(
+            l => l.HasOne(x => x.Project).WithMany(x => x.ProjectMembers).HasForeignKey(u => u.ProjectId),
+            r => r.HasOne(x => x.Member).WithMany(x => x.ProjectMembers).HasForeignKey(e => e.MemberId)
+          );
       });
       builder.Entity<ProjectType>(opts =>
       {
@@ -34,7 +38,7 @@ namespace api.Databases
           .WithMany(t => t.Projects)
           .HasForeignKey(p => p.TypeId);
       });
-      builder.Entity<WorkTask>(opts => 
+      builder.Entity<WorkTask>(opts =>
       {
         opts
           .HasOne(w => w.Project)
@@ -46,43 +50,75 @@ namespace api.Databases
           .HasForeignKey(w => w.MemberId);
       });
       base.OnModelCreating(builder);
+      var AdminRoleId = Guid.NewGuid().ToString();
       builder.Entity<IdentityRole>().HasData(
-        new() { Name = "Admin", NormalizedName = "ADMIN", ConcurrencyStamp = Guid.NewGuid().ToString() },
-        new() { Name = "Manager", NormalizedName = "MANAGER", ConcurrencyStamp = Guid.NewGuid().ToString() },
-        new() { Name = "Employee", NormalizedName = "EMPLOYEE", ConcurrencyStamp = Guid.NewGuid().ToString() },
-        new() { Name = "Client", NormalizedName = "CLIENT", ConcurrencyStamp = Guid.NewGuid().ToString() }
+        new()
+        {
+          Id = AdminRoleId,
+          Name = "Admin",
+          NormalizedName = "ADMIN",
+          ConcurrencyStamp = Guid.NewGuid().ToString()
+        },
+        new()
+        {
+          Name = "Manager",
+          NormalizedName = "MANAGER",
+          ConcurrencyStamp = Guid.NewGuid().ToString()
+        },
+        new()
+        {
+          Name = "Employee",
+          NormalizedName = "EMPLOYEE",
+          ConcurrencyStamp = Guid.NewGuid().ToString()
+        },
+        new()
+        {
+          Name = "Client",
+          NormalizedName = "CLIENT",
+          ConcurrencyStamp = Guid.NewGuid().ToString()
+        }
       );
 
-      // var pass = new PasswordHasher<AppUser>();
-      // var admin = new AppUser
-      // {
-      //   UserName = "terus",
-      //   Email = "phucthinhterus@gmail.com",
-      //   FirstName = "Phúc Thịnh",
-      //   LastName = "Phan",
-      //   EmailConfirmed = true,
-      //   NormalizedEmail = "PHUCTHINHTERUS@GMAIL.COM",
-      //   NormalizedUserName = "TERUS",
-      // };
-      // admin.PasswordHash = pass.HashPassword(admin, "Terus@123");
-      // List<AppUser> users = [];
-      // users.Add(admin);
-      // for (var i = 1; i <= 10; i++)
-      // {
-      //   var user = new AppUser
-      //   {
-      //     UserName = "user" + i,
-      //     Email = "user" + i + "@gmail.com",
-      //     FirstName = i.ToString(),
-      //     LastName = "User",
-      //     EmailConfirmed = true,
-      //     NormalizedEmail = "USER" + i + "@GMAIL.COM",
-      //     NormalizedUserName = "USER" + i,
-      //   };
-      //   user.PasswordHash = pass.HashPassword(user, "Terus@123");
-      //   users.Add(user);
-      // }
-      // builder.Entity<AppUser>().HasData(users);
+      var pass = new PasswordHasher<AppUser>();
+      var admin1 = new AppUser
+      {
+        Id = Guid.NewGuid().ToString(),
+        UserName = "terus",
+        Email = "phucthinhterus@gmail.com",
+        FirstName = "Phúc Thịnh",
+        LastName = "Phan",
+        EmailConfirmed = true,
+        NormalizedEmail = "PHUCTHINHTERUS@GMAIL.COM",
+        NormalizedUserName = "TERUS",
+      };
+      admin1.PasswordHash = pass.HashPassword(admin1, "Terus@123");
+      var admin2 = new AppUser
+      {
+        Id = Guid.NewGuid().ToString(),
+        UserName = "dev",
+        Email = "anhcrafter@gmail.com",
+        FirstName = "Quang Anh",
+        LastName = "Đặng",
+        EmailConfirmed = true,
+        NormalizedEmail = "ANHCRAFTER@GMAIL.COM",
+        NormalizedUserName = "DEV",
+      };
+      admin2.PasswordHash = pass.HashPassword(admin2, "Terus@123");
+      builder.Entity<AppUser>().HasData(admin1);
+      builder.Entity<AppUser>().HasData(admin2);
+
+      builder.Entity<IdentityUserRole<string>>().HasData(
+        new IdentityUserRole<string>
+        {
+          RoleId = AdminRoleId,
+          UserId = admin1.Id
+        },
+        new IdentityUserRole<string>
+        {
+          RoleId = AdminRoleId,
+          UserId = admin2.Id
+        }
+      );
     }
   }
 }

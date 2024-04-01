@@ -1,3 +1,5 @@
+using api.Dtos.Projects;
+
 namespace api.Dtos.Core
 {
   public class UserDto
@@ -18,5 +20,6 @@ namespace api.Dtos.Core
     public string? Description { get; set; }
     public string? AdditionalInfo { get; set; }
     public string Status { get; set; } = "0";
+    public List<ProjectDto> Projects = [];
   }
 }

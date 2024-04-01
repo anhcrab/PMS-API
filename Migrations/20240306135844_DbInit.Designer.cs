@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Databases;
 
@@ -10,9 +11,11 @@ using api.Databases;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240306135844_DbInit")]
+    partial class DbInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,29 +50,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "11e0a8ae-8cec-4e8d-9b7f-21fe0af58b74",
-                            ConcurrencyStamp = "d8cb802a-f38d-47fe-b3ad-4949f859fd66",
+                            Id = "1aadbad0-afa7-408b-9a86-a31d69364334",
+                            ConcurrencyStamp = "6c1444e6-9bc4-4ce1-8b15-23e208a25e4d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "b370661d-b0ca-4ad3-8d54-2211dd7e0fb2",
-                            ConcurrencyStamp = "6abd503b-33d1-4a7d-9c36-69bc67dd7f20",
+                            Id = "3962376e-e3ad-4d08-836d-77a39190b077",
+                            ConcurrencyStamp = "85fb0a25-99f6-4ca7-82f7-06158b1d87e0",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "aa00124d-de5f-4f38-b7a2-af54104f1b82",
-                            ConcurrencyStamp = "b28859f4-c1c6-431f-911d-15cbe459da56",
+                            Id = "78727ff8-b5a9-441d-adf5-71c2be81d0aa",
+                            ConcurrencyStamp = "c4ad4ee1-9c1e-47ab-bd99-1028fcd3c11f",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
-                            Id = "a7b9681f-9efa-4a46-9e2b-dafcd3ef7f1f",
-                            ConcurrencyStamp = "aa366bcc-1d3d-4190-bd80-904f371324fc",
+                            Id = "21f8d762-043e-4635-b25a-3c7c6dac4536",
+                            ConcurrencyStamp = "de379c7e-4de4-4070-b908-19e164331368",
                             Name = "Client",
                             NormalizedName = "CLIENT"
                         });
@@ -160,13 +163,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "40e56087-76f8-4c6b-b2b5-e6306014a8a2",
-                            RoleId = "11e0a8ae-8cec-4e8d-9b7f-21fe0af58b74"
+                            UserId = "2a8fc130-103a-4a39-9188-e8fa68b2d66d",
+                            RoleId = "1aadbad0-afa7-408b-9a86-a31d69364334"
                         },
                         new
                         {
-                            UserId = "1476e100-92cf-44b4-b384-82d87939fc95",
-                            RoleId = "11e0a8ae-8cec-4e8d-9b7f-21fe0af58b74"
+                            UserId = "2c6a180d-590e-42ac-b0ab-346c162473d3",
+                            RoleId = "1aadbad0-afa7-408b-9a86-a31d69364334"
                         });
                 });
 
@@ -309,12 +312,12 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "40e56087-76f8-4c6b-b2b5-e6306014a8a2",
+                            Id = "2a8fc130-103a-4a39-9188-e8fa68b2d66d",
                             AccessFailedCount = 0,
                             AdditionalInfo = "",
                             Address = "",
-                            ConcurrencyStamp = "46feb90c-c183-4869-9671-703e94e0af66",
-                            CreationDate = new DateTime(2024, 3, 15, 20, 4, 1, 166, DateTimeKind.Local).AddTicks(9696),
+                            ConcurrencyStamp = "fca3932b-a5a0-4f8d-b94b-16d24fb4c759",
+                            CreationDate = new DateTime(2024, 3, 6, 20, 58, 43, 649, DateTimeKind.Local).AddTicks(9082),
                             Department = 0,
                             Description = "",
                             Dob = "",
@@ -326,24 +329,24 @@ namespace api.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PHUCTHINHTERUS@GMAIL.COM",
                             NormalizedUserName = "TERUS",
-                            PasswordHash = "AQAAAAIAAYagAAAAEADQpleDrVIkmjfiU+4gWm+9XtzVwalbS9NMLtgwTBqidRCa1myb2JjDUV0OHl67tw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHMOylivT5W+ir84bObV1Yjyx79c7qSsAlwgIblUp+120yiuy2m9S2te3St6W+GlsQ==",
                             PhoneNumberConfirmed = false,
                             Position = "",
-                            SecurityStamp = "21517668-e08e-445c-a535-07f455d9745a",
+                            SecurityStamp = "9d3f6283-432f-439d-86c8-4d2cffff2fb1",
                             Sex = "male",
                             Status = 0,
                             TwoFactorEnabled = false,
-                            UpdatedDate = new DateTime(2024, 3, 15, 20, 4, 1, 166, DateTimeKind.Local).AddTicks(9709),
+                            UpdatedDate = new DateTime(2024, 3, 6, 20, 58, 43, 649, DateTimeKind.Local).AddTicks(9092),
                             UserName = "terus"
                         },
                         new
                         {
-                            Id = "1476e100-92cf-44b4-b384-82d87939fc95",
+                            Id = "2c6a180d-590e-42ac-b0ab-346c162473d3",
                             AccessFailedCount = 0,
                             AdditionalInfo = "",
                             Address = "",
-                            ConcurrencyStamp = "f3df191f-2cd4-4a0a-9222-222fdcc6af47",
-                            CreationDate = new DateTime(2024, 3, 15, 20, 4, 1, 235, DateTimeKind.Local).AddTicks(6989),
+                            ConcurrencyStamp = "91492b1e-058b-448b-94d1-7f384ec391c0",
+                            CreationDate = new DateTime(2024, 3, 6, 20, 58, 43, 710, DateTimeKind.Local).AddTicks(5915),
                             Department = 0,
                             Description = "",
                             Dob = "",
@@ -355,14 +358,14 @@ namespace api.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ANHCRAFTER@GMAIL.COM",
                             NormalizedUserName = "DEV",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP2oO3aEMmPklNGr3KrZvQ8DfgfSNjvIzh+UZtWi7AziSJaS7O3aTSbev+3HCUXrZA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELKhEzl3Mpi4gqVYR6m3O+Ja1qxMl48hs1/XPMCOovqs3WxsWTfQyT20CbTcpFihUA==",
                             PhoneNumberConfirmed = false,
                             Position = "",
-                            SecurityStamp = "b6a67828-3aa9-4fd8-96c9-7c5e8e7104c6",
+                            SecurityStamp = "fad05160-9680-4557-95bd-80604761d214",
                             Sex = "male",
                             Status = 0,
                             TwoFactorEnabled = false,
-                            UpdatedDate = new DateTime(2024, 3, 15, 20, 4, 1, 235, DateTimeKind.Local).AddTicks(7001),
+                            UpdatedDate = new DateTime(2024, 3, 6, 20, 58, 43, 710, DateTimeKind.Local).AddTicks(5926),
                             UserName = "dev"
                         });
                 });
@@ -473,10 +476,6 @@ namespace api.Migrations
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Deadline")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime(6)");

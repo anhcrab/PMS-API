@@ -229,24 +229,25 @@ namespace api.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "AppUserProject",
+                name: "ProjectMember",
                 columns: table => new
                 {
-                    MembersId = table.Column<string>(type: "varchar(255)", nullable: false),
-                    ProjectsId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false),
+                    ProjectId = table.Column<string>(type: "varchar(255)", nullable: false),
+                    MemberId = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppUserProject", x => new { x.MembersId, x.ProjectsId });
+                    table.PrimaryKey("PK_ProjectMember", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppUserProject_AspNetUsers_MembersId",
-                        column: x => x.MembersId,
+                        name: "FK_ProjectMember_AspNetUsers_MemberId",
+                        column: x => x.MemberId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AppUserProject_Projects_ProjectsId",
-                        column: x => x.ProjectsId,
+                        name: "FK_ProjectMember_Projects_ProjectId",
+                        column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -289,16 +290,29 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0c47a6ce-0073-4c7e-a518-876ab12cee5c", "b2d1bc1d-a453-4b93-ae26-8ba8f5ed8bfe", "Client", "CLIENT" },
-                    { "8c198f64-27ec-43cb-87f1-c7c4f3f62361", "9f6f20ae-8e14-49e4-9fa0-29f87866a4e5", "Manager", "MANAGER" },
-                    { "923be03a-503f-4d3d-8cdf-89aa0659b4ad", "6b4bbe67-701b-4547-99f0-c41ec5f4e496", "Employee", "EMPLOYEE" },
-                    { "ed17fce9-06d5-400e-a97d-6c26622c90f5", "54fb566c-481a-442b-8921-a7647fdf708f", "Admin", "ADMIN" }
+                    { "1aadbad0-afa7-408b-9a86-a31d69364334", "6c1444e6-9bc4-4ce1-8b15-23e208a25e4d", "Admin", "ADMIN" },
+                    { "21f8d762-043e-4635-b25a-3c7c6dac4536", "de379c7e-4de4-4070-b908-19e164331368", "Client", "CLIENT" },
+                    { "3962376e-e3ad-4d08-836d-77a39190b077", "85fb0a25-99f6-4ca7-82f7-06158b1d87e0", "Manager", "MANAGER" },
+                    { "78727ff8-b5a9-441d-adf5-71c2be81d0aa", "c4ad4ee1-9c1e-47ab-bd99-1028fcd3c11f", "Employee", "EMPLOYEE" }
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AppUserProject_ProjectsId",
-                table: "AppUserProject",
-                column: "ProjectsId");
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "AdditionalInfo", "Address", "ConcurrencyStamp", "CreationDate", "DeletedDate", "Department", "Description", "Dob", "Email", "EmailConfirmed", "FirstName", "Hometown", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Position", "SecurityStamp", "Sex", "Status", "SupervisorId", "TwoFactorEnabled", "UpdatedDate", "UserName" },
+                values: new object[,]
+                {
+                    { "2a8fc130-103a-4a39-9188-e8fa68b2d66d", 0, "", "", "fca3932b-a5a0-4f8d-b94b-16d24fb4c759", new DateTime(2024, 3, 6, 20, 58, 43, 649, DateTimeKind.Local).AddTicks(9082), null, 0, "", "", "phucthinhterus@gmail.com", true, "Phúc Thịnh", "", "Phan", false, null, "PHUCTHINHTERUS@GMAIL.COM", "TERUS", "AQAAAAIAAYagAAAAEHMOylivT5W+ir84bObV1Yjyx79c7qSsAlwgIblUp+120yiuy2m9S2te3St6W+GlsQ==", null, false, "", "9d3f6283-432f-439d-86c8-4d2cffff2fb1", "male", 0, null, false, new DateTime(2024, 3, 6, 20, 58, 43, 649, DateTimeKind.Local).AddTicks(9092), "terus" },
+                    { "2c6a180d-590e-42ac-b0ab-346c162473d3", 0, "", "", "91492b1e-058b-448b-94d1-7f384ec391c0", new DateTime(2024, 3, 6, 20, 58, 43, 710, DateTimeKind.Local).AddTicks(5915), null, 0, "", "", "anhcrafter@gmail.com", true, "Quang Anh", "", "Đặng", false, null, "ANHCRAFTER@GMAIL.COM", "DEV", "AQAAAAIAAYagAAAAELKhEzl3Mpi4gqVYR6m3O+Ja1qxMl48hs1/XPMCOovqs3WxsWTfQyT20CbTcpFihUA==", null, false, "", "fad05160-9680-4557-95bd-80604761d214", "male", 0, null, false, new DateTime(2024, 3, 6, 20, 58, 43, 710, DateTimeKind.Local).AddTicks(5926), "dev" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "1aadbad0-afa7-408b-9a86-a31d69364334", "2a8fc130-103a-4a39-9188-e8fa68b2d66d" },
+                    { "1aadbad0-afa7-408b-9a86-a31d69364334", "2c6a180d-590e-42ac-b0ab-346c162473d3" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -338,6 +352,16 @@ namespace api.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProjectMember_MemberId",
+                table: "ProjectMember",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectMember_ProjectId",
+                table: "ProjectMember",
+                column: "ProjectId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Projects_TypeId",
                 table: "Projects",
                 column: "TypeId");
@@ -357,9 +381,6 @@ namespace api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AppUserProject");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -373,6 +394,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "ProjectMember");
 
             migrationBuilder.DropTable(
                 name: "WorkTasks");

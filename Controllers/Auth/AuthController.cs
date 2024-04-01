@@ -94,6 +94,14 @@ namespace api.Controllers.Auth
       }
     }
 
+    [HttpGet("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+      await _signInManager.SignOutAsync();
+      return NoContent();
+    }
+
     [HttpGet("testmail")]
     public async Task<IActionResult> TestMail()
     {

@@ -20,7 +20,8 @@ namespace api.Models
     public DateTime CreationDate { get; set; } = DateTime.Now;
     public DateTime UpdatedDate { get; set; } = DateTime.Now;
     public DateTime? DeletedDate { get; set; }
-    public List<Project> Projects { get; set; } = [];
-    public List<WorkTask> Tasks { get; set; } = [];
+    public ICollection<Project> Projects { get; set; } = [];
+    public ICollection<WorkTask> Tasks { get; set; } = [];
+    public ICollection<ProjectMember> ProjectMembers { get; set; } = [];
   }
 }

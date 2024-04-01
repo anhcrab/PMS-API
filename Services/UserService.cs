@@ -15,7 +15,7 @@ namespace api.Services
     private readonly UserManager<AppUser> _userManager = userManager;
     public async Task<List<UserDto>> AllAsync()
     {
-      var result = await _userManager.Users.ToListAsync();
+      var result = await _userManager.Users.Include(u => u.Projects).ToListAsync();
       if (result.IsNullOrEmpty()) return [];
       return result.Select(u => u.ToUserDto()).ToList();
     }
@@ -102,10 +102,11 @@ namespace api.Services
       string? search = null
     )
     {
-      var list = await _userManager.Users.ToListAsync();
-      if (role != null)
+      var list = await _userManager.Users.Include(u => u.Projects).ToListAsync();
+      if (role != null && role != "")
       {
-        list = [.. (await _userManager.GetUsersInRoleAsync(role))];
+        var ids = (await _userManager.GetUsersInRoleAsync(role)).Select(u => u.Id).ToList();
+        list = list.Where(u => ids.Contains(u.Id)).ToList();
       }
       if (limit == -1)
       {

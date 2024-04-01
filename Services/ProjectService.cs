@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using api.Databases;
 using api.Dtos.Projects;
 using api.Helpers;
 using api.Interfaces.Projects;
@@ -11,12 +12,14 @@ namespace api.Services
   public class ProjectService(
     IProjectRepository repository,
     UserManager<AppUser> userManager,
-    IProjectTypeRepository typeRepo
+    IProjectTypeRepository typeRepo,
+    ApplicationDbContext context
   ) : IProjectService
   {
     private readonly IProjectRepository _repository = repository;
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly IProjectTypeRepository _typeRepo = typeRepo;
+    private readonly ApplicationDbContext _ctx = context;
 
     public async Task<List<ProjectDto>?> ListAsync()
     {
@@ -24,7 +27,7 @@ namespace api.Services
       return list.Select(p => p.ToProjectDto()).ToList();
     }
 
-    public async Task CreateAsync(ProjectDto project)
+    public async Task CreateAsync(NewProjectDto project)
     {
       var time = DateTime.Now;
       var type = await _typeRepo.ReadAsync(project.TypeId!);
@@ -33,7 +36,7 @@ namespace api.Services
         var newProject = new Project
         {
           Name = project.Name ??= "",
-          Progress = project.Progress ??= "",
+          Progress = project.Progress ??= "0",
           ResponsibleId = project.ResponsibleId ??= "",
           Type = type,
           Budget = project.Budget,
@@ -42,7 +45,8 @@ namespace api.Services
           AdditionalInfo = project.AdditionalInfo ??= "",
           Status = ToProjectStatus(project.Status ??= "NEW"),
           CreationDate = time,
-          UpdatedDate = time
+          UpdatedDate = time,
+          Members = [.. _ctx.Users.Where(u => project.Members.Contains(u.Id))]
         };
         await _repository.CreateAsync(newProject);
         type.Projects.Add(newProject);
@@ -56,11 +60,12 @@ namespace api.Services
       return project?.ToProjectDto();
     }
 
-    public async Task UpdateAsync(string id, ProjectDto project)
+    public async Task UpdateAsync(string id, UpdateProjectDto project)
     {
       var existProject = await _repository.ReadAsync(id);
       if (existProject != null)
       {
+        
         existProject.Name = project.Name ??= "";
         existProject.ResponsibleId = project.ResponsibleId ??= "";
         existProject.Progress = project.Progress ??= "";
@@ -71,6 +76,7 @@ namespace api.Services
         existProject.AdditionalInfo = project.AdditionalInfo ??= "";
         existProject.Status = ToProjectStatus(project.Status ??= "PENDING");
         existProject.UpdatedDate = DateTime.Now;
+        existProject.Members = [.. _ctx.Users.Where(u => project.Members.Contains(u.Id))];
         await _repository.UpdateAsync(id, existProject);
       }
     }
@@ -119,10 +125,18 @@ namespace api.Services
       int limit = 20,
       int page = 1,
       string? typeId = null,
-      string? search = null
+      string? search = null,
+      string? responsibleId = null
     )
     {
       var list = await _repository.ListAsync();
+      if (responsibleId != null && responsibleId.Trim() != "") {
+        responsibleId = responsibleId.Trim();
+        var responsible = await _userManager.FindByIdAsync(responsibleId);
+        if (responsible != null) {
+          list = list.Where(p => p.ResponsibleId == responsible.Id).ToList();
+        }
+      }
       if (limit == -1)
       {
         return new PaginateProjectDto

@@ -11,15 +11,13 @@ namespace api.Controllers.Project
   [ApiController]
   [Route("api/projecttypes")]
   [Authorize]
-  public class ProjectTypeController(IProjectTypeService service, ApplicationDbContext context) : ControllerBase
+  public class ProjectTypeController(IProjectTypeService service) : ControllerBase
   {
     private readonly IProjectTypeService _service = service;
-    private readonly ApplicationDbContext _ctx = context;
 
     [HttpGet]
     public async Task<IActionResult> List()
     {
-      // return Ok(await _ctx.ProjectTypes.Include(t => t.Projects).ToListAsync());
       return Ok(await _service.ListAsync());
     }
 

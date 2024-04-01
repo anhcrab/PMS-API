@@ -26,7 +26,8 @@ namespace api.Mappers
         Department = appUser.Department.ToString(),
         Address = appUser.Address,
         PhoneNumber = appUser.PhoneNumber,
-        Status = appUser.Status.ToString()
+        Status = appUser.Status.ToString(),
+        Projects = appUser.Projects.Select(p => p.ToProjectDto()).ToList()
       };
     }
     public static ProfileExtDto ToProfileExtDto(this AppUser appUser)
@@ -74,6 +75,23 @@ namespace api.Mappers
         UpdatedDate = project.UpdatedDate.ToString(),
         DeletedDate = project.DeletedDate.ToString(),
         Type = project.Type?.ToProjectTypeDto(),
+        Members = project.Members.Select(m => m.Id).ToList(),
+      };
+    }
+    public static WorkTaskDto ToWorkTaskDto(this WorkTask task)
+    {
+      return new WorkTaskDto
+      {
+        Id = task.Id,
+        Content = task.Content,
+        IsCompleted = task.IsCompleted,
+        Name = task.Name,
+        Deadline = task.Deadline,
+        CreationDate = task.CreationDate.ToString(),
+        MemberId = task.MemberId,
+        ProjectId = task.ProjectId,
+        Member = task.Member?.ToUserDto(),
+        Project = task.Project?.ToProjectDto()
       };
     }
   }

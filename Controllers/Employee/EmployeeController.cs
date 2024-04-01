@@ -19,10 +19,6 @@ namespace api.Controllers.Employee
     [Authorize(Roles = "Admin, Manager")]
     public async Task<IActionResult> List()
     {
-      var log = "[" + DateTime.Now.ToString() + "]";
-      log += ": " + User.GetEmail();
-      log += " - " + "List employees";
-      _logger.LogInformation(log);
       return Ok(await _service.AllAsync());
     }
 
@@ -39,7 +35,7 @@ namespace api.Controllers.Employee
     public async Task<IActionResult> Add([FromBody] NewEmployee newEmployee)
     {
       var res = await _service.CreateAsync(newEmployee.Id, newEmployee.Department, newEmployee.SupervisorId);
-      return Ok(res != null ? res : "null mẹ rồi");
+      return Ok(res != null ? res : "");
     }
 
     [HttpDelete("{id}")]
@@ -73,7 +69,7 @@ namespace api.Controllers.Employee
       return Ok(await _service.Room(User.GetEmail()));
     }
 
-    [HttpGet("myteam/")]
+    [HttpGet("myteam")]
     public async Task<IActionResult> MyTeam()
     {
       return Ok(await _service.Team(User.GetEmail()));

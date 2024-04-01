@@ -16,11 +16,13 @@ namespace api.Models
     public string PaymentDate { get; set; } = "";
     public string AdditionalInfo { get; set; } = "";
     public ProjectStatuses Status { get; set; } = ProjectStatuses.NEW;
-    public List<AppUser> Members { get; set; } = [];
-    public List<WorkTask> Tasks { get; set; } = [];
-    public ProjectType? Type { get; set; }
     public DateTime CreationDate { get; set; } = DateTime.Now;
     public DateTime UpdatedDate { get; set; } = DateTime.Now;
     public DateTime? DeletedDate { get; set; }
+
+    public ICollection<AppUser> Members { get; set; } = [];
+    public ICollection<WorkTask> Tasks { get; set; } = [];
+    public ProjectType? Type { get; set; }
+    public ICollection<ProjectMember> ProjectMembers { get; set; } = [];
   }
 }

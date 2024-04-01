@@ -9,5 +9,6 @@ namespace api.Interfaces.Projects
     Task<Project?> ReadAsync(string id);
     Task UpdateAsync(string id, Project project);
     Task DeleteAsync(string id);
+    // Task UpdateMembers(Project project, List<AppUser> list);
   }
 }
